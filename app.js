@@ -1,17 +1,30 @@
-if(process.env.NODE_ENV == "development") require("dotenv").config();
+require("dotenv").config();
 const express = require('express')
 const app = express()
-const port = 3000
 const cors = require('cors')
-const routes = require('router/ind')
+const routes = require('./routes/index')
 
 app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+app.use('/', routes)
+
+app.use((err, req, res, next) => {
+  let statusCode = 500
+  switch (err.name) {
+    case "SequelizeValidationError":
+      statusCode = 400
+      break;
+
+    case "notFound":
+      statusCode = 404
+      break;
+
+    default:
+      break;
+  }
+  res.status(statusCode).json({ error: err });
+});
+
+module.exports = app

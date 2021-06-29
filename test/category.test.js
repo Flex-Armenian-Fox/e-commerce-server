@@ -4,36 +4,37 @@ const { sequelize } = require('../models/index.js')
 const {queryInterface} = sequelize;
 
 beforeAll((done) =>{
-    queryInterface.bulkDelete("users", null, {}).then(() => {
+    queryInterface.bulkDelete("categories", null, {}).then(() => {
         done();
     })
 })
 
 afterAll((done) =>{
-    queryInterface.bulkDelete("users", null, {}).then(() => {
+    queryInterface.bulkDelete("categories", null, {}).then(() => {
         done();
     })
 })
 
-describe("POST /users/register", () => {
-    it("Should create user and response in JSON with access_token", function(done) {
+describe("POST /categories", () => {
+    it("Should create category in JSON with returning category data", function(done) {
         request(app)
-        .post("/users/register") 
-        .set("Content-Type", "application/json")     
-        .send({email: "budigk@gmail.com", password: "123456", role: "admin"})
+        .post("/categories") 
+        .set("Content-Type", "application/json")
+        .set({'access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYyNDk5MjQzMX0.piciQmnFA4hduk9Tc59hw2t8nUv4m7DKM_BS3eZOOfA'})     
+        .send({name: "Fashion"})
         .then(response => {
             expect(response.status).toBe(201);
-            expect(response.body).toHaveProperty("access_token", expect.any(String))
+            expect(response.body).toHaveProperty("name", expect.any(String))
 
             done()   
         });
     })
 
-    it("Should not create user and give response error", function(done) {
+    it("Should not response error cause not have access_token", function(done) {
         request(app)
         .post("/users/register") 
         .set("Content-Type", "application/json")     
-        .send({email: "", password: "", role: "admin"})
+        .send({name: "Fashion"})
         .then(response => {
             expect(response.status).toBe(400);
             expect(response.body).toHaveProperty("message", expect.any(String))

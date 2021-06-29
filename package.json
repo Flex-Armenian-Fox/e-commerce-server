@@ -4,8 +4,8 @@
   "description": "e-commerce-server",
   "main": "index.js",
   "scripts": {
-    "setup:dev": "sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate ",
-    "setup:test": "set NODE_ENV=test&& sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate ",
+    "setup:dev": "sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate&&sequelize-cli db:seed:all ",
+    "setup:test": "set NODE_ENV=test&& sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate&&sequelize-cli db:seed:all ",
     "test": "set NODE_ENV=test&&jest --runInBand --forceExit",
     "dev": "set NODE_ENV=development&&nodemon ./bin/server.js",
     "start": "set NODE_ENV=production&&node ./bin/server.js"

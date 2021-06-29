@@ -1,7 +1,8 @@
 function errHandler(err, req, res, next){
     let statusCode;
     let message;
-        
+    
+    // console.log("FROM ERROR HANDLE", err.errors[0].message)
     switch (err.name){
         case "LoginError":
             statusCode = 400;
@@ -9,7 +10,7 @@ function errHandler(err, req, res, next){
             break;
         case "SequelizeValidationError":
             statusCode = 400;
-            message = err.errors
+            message = err.errors[0].message
             break;
         case "NotFound":
             statusCode = 404;

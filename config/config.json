@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": null,
-    "database": "Commerce_DB_Test",
+    "database": "Commerce_DB",
     "host": "localhost",
     "dialect": "postgres"
   },

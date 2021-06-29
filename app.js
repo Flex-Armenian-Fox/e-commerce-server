@@ -21,9 +21,18 @@ app.use((err, req, res, next) => {
       statusCode = 404
       break;
 
+    case "unauthorized":
+      statusCode = 401
+      break;
+
+    case "badRequest":
+      statusCode = 400
+      break;  
+
     default:
       break;
   }
+  console.log(err)
   res.status(statusCode).json({ error: err });
 });
 

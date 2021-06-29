@@ -13,11 +13,15 @@ class CustomError extends Error {
 
         switch (name) {
             case 'BadRequest':
+            case 'SequelizeValidationError':
                 statusCode = 400
                 break
             case 'Unauthorized':
             case 'JsonWebTokenError':
                 statusCode = 401
+                break
+            case 'NotFound':
+                statusCode = 404
                 break
             default:
                 console.error('Uncaught Error =>', err)

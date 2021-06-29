@@ -13,10 +13,36 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Product.init({
-    name: DataTypes.STRING,
-    image_url: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Please Provide Product Name'
+        }
+      }
+    },
+    image_url: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Please Provide Image URL'
+        }
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0
+      }
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0
+      }
+    }
   }, {
     sequelize,
     modelName: 'Product',

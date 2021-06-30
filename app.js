@@ -22,18 +22,22 @@ app.use((err, req, res, next) => {
       break;
 
     case "unauthorized":
+      err.message = "User does not have permission"
       statusCode = 401
       break;
 
     case "badRequest":
       statusCode = 400
-      break;  
+      break;
+
+    case "JsonWebTokenError":
+      statusCode = 400
+      break;
 
     default:
       break;
   }
-  console.log(err)
-  res.status(statusCode).json({ error: err });
+  res.status(statusCode).json({ message: err.message });
 });
 
 module.exports = app

@@ -4,11 +4,10 @@ const {User} = require('../models/')
 
 const Authentication = (req, res, next) =>{
     try{
-        console.log('---------AUTH--------')
         const dataDecoded = jwtDecrypt(req.headers.access_token)
         User.findByPk(dataDecoded.id)
             .then(user => {
-                if (!user) throw {name: "badRequest", message:"Invalid token"}
+                if (!user) throw {name: "notFound", message:"User not found"}
                 else{
                     req.currentUser = {id: user.id, role:user.role}
                     next()

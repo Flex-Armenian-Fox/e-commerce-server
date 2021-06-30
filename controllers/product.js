@@ -9,6 +9,15 @@ class Controller{
             })
             .catch(err => next(err))
     }
+    static putProduct(req, res, next){
+        if(req.currentUser.role != 'admin')  next({name: "unauthorized"})
+        Product.update(req.body, {where: {id:req.params.id}, returning: true})
+            .then((product) => {
+                if(product[0] == 0) throw({name: "notFound", message: "Product not found" })
+                res.status(200).json("edit success")
+            })
+            .catch(err => next(err))
+    }
 }
 
 module.exports = Controller

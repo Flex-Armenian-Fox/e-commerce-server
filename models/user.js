@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
+const {hashPassword} = require('../helpers/bcrypt')
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -61,11 +61,18 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Role cannot be empty'
-        },
-        defaultValue: 'customer'
+        }
       }
     }
   }, {
+    hooks: {
+        beforeCreate: (user, options) => {
+          let hashedPw = hashPassword(user.password)
+          user.password = hashedPw
+
+          if (user.role !== 'admin') user.role = 'customer'
+        }
+    },
     sequelize,
     modelName: 'User',
   });

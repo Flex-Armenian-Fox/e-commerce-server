@@ -4,7 +4,11 @@
   "description": "e-commerce-server",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "setup:dev": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate ",
+    "setup:test": "sequelize-cli db:drop --env test && sequelize-cli db:create --env test && sequelize-cli db:migrate --env test",
+    "test": "NODE_ENV=test && jest --runInBand --forceExit --detectOpenHandles",
+    "dev": "NODE_ENV=development && nodemon ./bin/server.js",
+    "start": "NODE_ENV=production && node ./bin/server.js"
   },
   "repository": {
     "type": "git",

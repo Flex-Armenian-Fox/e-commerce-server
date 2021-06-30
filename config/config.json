@@ -5,5 +5,12 @@
     "database": "ecommerce_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
+  },
+  "test": {
+    "username": "karen",
+    "password": "postgres",
+    "database": "ecommerce_db_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   }
 }

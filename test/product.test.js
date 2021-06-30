@@ -4,7 +4,7 @@ const { sequelize } = require('../models/index.js')
 const {queryInterface} = sequelize;
 const { generateToken } = require('../helpers/jwt.js')
 let token = "";
-let idCategory = 0;
+let idProduct = 0;
 
 beforeAll((done) =>{
     const {hashPassword} = require("../helpers/bcrypt");
@@ -24,28 +24,46 @@ beforeAll((done) =>{
             email: user.email,
         });
 
-        done();
-    })
+        let category = {
+            id: 1,
+            name: "Fashion",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        }
 
+        return queryInterface.bulkInsert('categories', [category])
+    })
+    .then(() => {
+        done()
+    })
 })
 
 afterAll((done) =>{
     queryInterface.bulkDelete("users", null, {})
     .then(() => {
-        queryInterface.bulkDelete("categories", null, {})
-        .then(() => {
-            done();
-        })
+        return queryInterface.bulkDelete("products", null, {})
+    })
+    .then(() => {
+        return queryInterface.bulkDelete("categories", null, {})
+    })
+    .then(() => {
+        done();
     })
 })
 
-describe("POST /categories", () => {
-    it("Should create category in JSON with returning category data", function(done) {
+describe("POST /products", () => {
+    it("POST Products : Should create Product in JSON with returning Product data", function(done) {
         request(app)
-        .post("/categories") 
+        .post("/products") 
         .set("Content-Type", "application/json")
         .set("access_token", token)     
-        .send({name: "Fashion"})
+        .send({
+            name: "TEST PRODUCT",
+            image_url: "http://TEST.JPG",
+            price: 10000,
+            stock: 10,
+            categoryid: 1
+        })
         .then(response => {
             console.log(token)
             expect(response.status).toBe(201);
@@ -55,11 +73,17 @@ describe("POST /categories", () => {
         });
     })
 
-    it("Should  response error cause not have access_token", function(done) {
+    it("POST Products : Should response error cause not have access_token", function(done) {
         request(app)
         .post("/categories") 
         .set("Content-Type", "application/json")     
-        .send({name: "Fashion"})
+        .send({
+            name: "TEST PRODUCT",
+            image_url: "http://TEST.JPG",
+            price: 10000,
+            stock: 10,
+            categoryid: 1
+        })
         .then(response => {
             expect(response.status).toBe(500);
             expect(response.body).toHaveProperty("message", expect.any(String))
@@ -68,25 +92,24 @@ describe("POST /categories", () => {
     })
 })
 
-describe("GET /categories", () => {
-    it("Should Return Categories Data in Array", function(done) {
+describe("GET /products", () => {
+    it("GET PRODUCT : Should Return Products Data in Array", function(done) {
         request(app)
-        .get("/categories") 
+        .get("/products") 
         .set("Content-Type", "application/json")
         .set("access_token", token)     
         .then(response => {
             expect(response.status).toBe(200);
 
-            idCategory = response.body[0].id
+            idProduct = response.body[0].id
             done()   
         });
     })
 
-    it("Should  response error cause not have access_token", function(done) {
+    it("GET PRODUCT : Should  response error cause not have access_token", function(done) {
         request(app)
-        .post("/categories") 
+        .post("/products") 
         .set("Content-Type", "application/json")     
-        .send({name: "Fashion"})
         .then(response => {
             expect(response.status).toBe(500);
             expect(response.body).toHaveProperty("message", expect.any(String))
@@ -95,13 +118,19 @@ describe("GET /categories", () => {
     })
 })
 
-describe("PUT /categories", () => {
-    it(`PUT : update category (id:${idCategory}) should return response 200`, function(done) {
+describe("PUT /products", () => {
+    it(`PUT : update products (id:${idProduct}) should return response 200`, function(done) {
         request(app)
-        .put(`/categories/${idCategory}`) 
+        .put(`/products/${idProduct}`) 
         .set("Content-Type", "application/json")
         .set("access_token", token)     
-        .send({name: "Fashion"})
+        .send({
+            name: "TEST PRODUCT",
+            image_url: "http://TEST.JPG",
+            price: 10000,
+            stock: 10,
+            categoryid: 1
+        })
         .then(response => {
             console.log(token)
             expect(response.status).toBe(200);
@@ -111,11 +140,17 @@ describe("PUT /categories", () => {
         });
     })
 
-    it(`PUT : Update Category (id:${idCategory}) Should response error cause not have access_token`, function(done) {
+    it(`PUT : Update Category (id:${idProduct}) Should response error cause not have access_token`, function(done) {
         request(app)
-        .put(`/categories/${idCategory}`) 
+        .put(`/products/${idProduct}`) 
         .set("Content-Type", "application/json")     
-        .send({name: "Fashion"})
+        .send({
+            name: "TEST PRODUCT",
+            image_url: "http://TEST.JPG",
+            price: 10000,
+            stock: 10,
+            categoryid: 1
+        })
         .then(response => {
             expect(response.status).toBe(500);
             expect(response.body).toHaveProperty("message", expect.any(String))
@@ -124,10 +159,10 @@ describe("PUT /categories", () => {
     })
 })
 
-describe("DELETE /categories", () => {
-    it(`DELETE : delete category (id:${idCategory}) should return response 200`, function(done) {
+describe("DELETE /products", () => {
+    it(`DELETE : delete product (id:${idProduct}) should return response 200`, function(done) {
         request(app)
-        .delete(`/categories/${idCategory}`) 
+        .delete(`/products/${idProduct}`) 
         .set("Content-Type", "application/json")
         .set("access_token", token)     
         .then(response => {
@@ -138,9 +173,9 @@ describe("DELETE /categories", () => {
         });
     })
 
-    it(`DELETE : Delete Category (id:${idCategory}) Should response error cause not have access_token`, function(done) {
+    it(`DELETE : Delete product (id:${idProduct}) Should response error cause not have access_token`, function(done) {
         request(app)
-        .delete(`/categories/${idCategory}`) 
+        .delete(`/products/${idProduct}`) 
         .set("Content-Type", "application/json")     
         .then(response => {
             expect(response.status).toBe(500);

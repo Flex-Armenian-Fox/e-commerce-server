@@ -20,13 +20,11 @@ class UsersController{
             })
         })
         .catch(err => {
-            console.log(err)
             next(err)
         })
     }
 
     static login(req, res, next){
-        console.log(req.body)
         user.findOne({
             where: {email: req.body.email}
         })
@@ -58,7 +56,6 @@ class UsersController{
             })
         })
         .catch(err => {
-            console.log(err)
             next(err)
         })
     }

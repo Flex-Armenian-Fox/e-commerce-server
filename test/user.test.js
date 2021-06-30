@@ -2,15 +2,18 @@ const request = require('supertest')
 const app = require('../index.js')
 const { sequelize } = require('../models/index.js')
 const {queryInterface} = sequelize;
+let token = "";
 
 beforeAll((done) =>{
-    queryInterface.bulkDelete("users", null, {}).then(() => {
+    queryInterface.bulkDelete("users", null, {})
+    .then(() => {
         done();
     })
 })
 
 afterAll((done) =>{
-    queryInterface.bulkDelete("users", null, {}).then(() => {
+    queryInterface.bulkDelete("users", null, {})
+    .then(() => {
         done();
     })
 })
@@ -51,7 +54,7 @@ describe("POST /users/login", () => {
         .then(response => {
             expect(response.status).toBe(200);
             expect(response.body).toHaveProperty("access_token", expect.any(String))
-
+            token = response.body.access_token
             done()   
         });
     })

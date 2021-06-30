@@ -2,7 +2,6 @@ function errHandler(err, req, res, next){
     let statusCode;
     let message;
     
-    // console.log("FROM ERROR HANDLE", err.errors[0].message)
     switch (err.name){
         case "LoginError":
             statusCode = 400;
@@ -19,10 +18,17 @@ function errHandler(err, req, res, next){
             statusCode = 401;
             message = err.message
         default:
+            if (err.message == undefined) {
+                message = err
+            } else {
+                message = err.message;
+            }
+            
             statusCode = 500;
-            message = err.message;
             break;
     }
+
+    console.log("DARI ERROR HANDLE : " , err)
 
     res.status(statusCode).json({
         message: message

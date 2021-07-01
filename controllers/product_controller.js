@@ -1,6 +1,6 @@
 const ResponseHelper = require('../helpers/response_helper')
 const CustomError = require('../middlewares/error_handler')
-const { Product } = require('../models')
+const { Product, Category } = require('../models')
 
 class Controller {
     static async getProducts(req, res, next) {
@@ -10,10 +10,19 @@ class Controller {
 
             if (!productId) {
                 products = await Product.findAll({
-                   order: [['id', 'asc']]
+                   order: [['id', 'asc']],
+                   include: {
+                       model: Category,
+                       attributes: ['id', 'category_name']
+                   }
                 })
             } else {
-                products = await Product.findByPk(productId)
+                products = await Product.findByPk(productId, {
+                    include: {
+                        model: Category,
+                        attributes: ['id', 'category_name']
+                    }
+                })
 
                 if (!products) throw new CustomError('NotFound', `Product with Id ${productId} was not found`)
             }

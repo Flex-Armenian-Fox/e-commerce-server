@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Product.belongsTo(models.Category, { foreignKey: 'category_id' })
     }
   };
   Product.init({
@@ -41,6 +42,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         min: 0
+      }
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Please provide category_id'
+        }
       }
     }
   }, {

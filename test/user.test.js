@@ -22,7 +22,6 @@ let accesstoken = ''
 
 // LIFECYCLE - ALL
 beforeAll((done) => {
-    console.log('LIFECYCLE USER ==> beforeAll')
 
     // ini untuk: Bersihin DB
     queryInterface.bulkDelete('Users', null, {})
@@ -48,7 +47,7 @@ beforeAll((done) => {
 })
 
 afterAll((done) => {  // ini untuk: Bersihin DB
-    console.log('LIFECYCLE USER ==> afterAll')
+
     queryInterface.bulkDelete('Users', null, {})
         .then(() => {done()})
 })

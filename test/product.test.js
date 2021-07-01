@@ -8,6 +8,7 @@ const {hashPassword} = require('../helpers/bcrypt.js')
 const jwt = require('jsonwebtoken')
 
 let accesstoken = ''
+const dummyProductId = 1
 
 beforeAll((done) => {
     console.log('LIFECYCLE PRODUCTS ==> beforeAll')
@@ -82,7 +83,7 @@ afterAll((done) => {
 beforeEach(() => {})
 afterEach(() => {})
 
-// PRODUCTS --> DISPLAY ALL
+// PRODUCTS --> READ
 describe('GET /products/', () => {
     
     it('With valid accesstoken, should display all available products', function(done) {
@@ -108,8 +109,8 @@ describe('GET /products/', () => {
     })
 })
 
-// PRODUCTS --> CREATE NEW PRODUCT
-describe.only('POST /products/', () => {
+// PRODUCTS --> CREATE
+describe('POST /products/', () => {
     
     it('With a valid accesstoken AND role is admin, a product can be created', function(done) {
         request(app)
@@ -131,7 +132,7 @@ describe.only('POST /products/', () => {
             })
     })
 
-    it.only('Without a valid accesstoken and/or role is not admin, a product cannot be created', function(done) {
+    it('Without a valid accesstoken and role is not admin, a product cannot be created', function(done) {
         request(app)
             .post('/products')
             .set('Content-Type', 'application/json')
@@ -144,6 +145,69 @@ describe.only('POST /products/', () => {
                 createdAt: new Date(),
                 updatedAt: new Date()
             })
+            .then((response) => {
+                expect(response.status).toBe(401)
+                expect(response.body).toHaveProperty('error', expect.any(Object))
+                done()
+            })
+    })
+})
+
+// PRODUCTS --> DELETE
+describe('DELETE /products/:id', () => {
+    
+    it('With a valid accesstoken AND role is admin, a product can be deleted', function(done) {
+        request(app)
+            .delete('/products/' + dummyProductId)
+            .set('accesstoken', accesstoken)
+            .then((response) => {
+                expect(response.status).toBe(200)
+                expect(response.body).toHaveProperty('success', expect.any(String))
+                done()
+            })
+    })
+
+    it('Without a valid accesstoken and role is not admin, a product cannot be deleted', function(done) {
+        request(app)
+            .delete('/products/' + dummyProductId)
+            .set('accesstoken', !accesstoken)
+            .then((response) => {
+                expect(response.status).toBe(401)
+                expect(response.body).toHaveProperty('error', expect.any(Object))
+                done()
+            })
+    })
+    
+})
+
+// PRODUCTS --> UPDATE
+describe('PUT /products/:id', () => {
+
+    const editedData = {
+        name: 'Rambutan',
+        image_url: 'http://www.image.com/1',
+        price: 18900,
+        stock: 24
+    }
+
+    it('With a valid accesstoken AND role is admin, a product can be updated', function (done) {
+        request(app)
+            .put('/products/' + dummyProductId)
+            .set('accesstoken', accesstoken)
+            .send(editedData)
+            .then((response) => {
+                expect(response.status).toBe(200)
+                expect(response.body).toHaveProperty('product', expect.any(String))
+                expect(response.body).toHaveProperty('updated_product', expect.any(Object))
+                done()
+            })
+    })
+
+    it('Without a valid accesstoken, a product cannot be updated', function (done) {
+        request(app)
+            .put('/products/' + dummyProductId)
+            .set('accesstoken', !accesstoken)
+            .send(editedData)
             .then((response) => {
                 expect(response.status).toBe(401)
                 expect(response.body).toHaveProperty('error', expect.any(Object))

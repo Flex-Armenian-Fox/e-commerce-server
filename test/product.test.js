@@ -311,6 +311,49 @@ describe("Update Product", (done) =>{
     })
 })
 
-// describe("Delete product"){
-//     it("Should return ")
-// }
+describe("Delete product", (done) => {
+    it("Should return error 401 unauthorized", (done) => {
+        request(app)
+            .delete('/products/' + targetID)
+            .set('content-type', 'application/json')
+            .set('access_token', user_token)
+            .then((res) => {
+                expect(res.status).toBe(401)
+                done()
+            })
+        })
+
+    it("Should return error 404 not found", (done) => {
+        request(app)
+            .delete('/products/' + (targetID+9))
+            .set('content-type', 'application/json')
+            .set('access_token', admin_token)
+            .then((res) => {
+                expect(res.status).toBe(404)
+                done()
+            })
+        })
+
+    it("Should return error 400 bad request", (done) => {
+        request(app)
+            .delete('/products/' + (targetID))
+            .set('content-type', 'application/json')
+            .set('access_token', 'broken token')
+            .then((res) => {
+                expect(res.status).toBe(400)
+                done()
+            })
+        })
+
+    it("Should delete the data", (done) =>{
+        request(app)
+            .delete('/products/' + targetID)
+            .set('content-type', 'application/json')
+            .set('access_token', admin_token)
+            .then(res => {
+                expect(res.status).toBe(200)
+                expect(res.body).toHaveProperty('message', 'Item deleted')
+                done()
+            })
+        })
+})

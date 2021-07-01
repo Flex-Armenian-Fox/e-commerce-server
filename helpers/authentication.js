@@ -6,7 +6,7 @@ const {User} = require('../models')
 function authentication(req, res, next) {
 
     try {
-        
+        console.log('MASUK AUTHENTICATION')
         const receivedToken = req.headers.accesstoken
         const validToken = verifyToken(receivedToken)
 
@@ -18,7 +18,7 @@ function authentication(req, res, next) {
                         message: 'Email/password incorrect'
                     }
                 } else { // JWT valid DAN User KETEMU
-                    req.currentUser = {id: user.id}
+                    req.currentUser = {role: user.role}
                     next()
                 }
             })

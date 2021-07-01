@@ -79,25 +79,75 @@ afterAll((done) => {
         })
 })
 
-beforeEach((done) => {
-    console.log('LIFECYCLE PRODUCTS ==> beforeEach')
-})
-afterEach((done) => {
-    console.log('LIFECYCLE PRODUCTS ==> afterEach')
-})
+beforeEach(() => {})
+afterEach(() => {})
 
 // PRODUCTS --> DISPLAY ALL
 describe('GET /products/', () => {
-    // POSITIVE
-    it.only('With valid accesstoken, should display all available products', function(done) {
+    
+    it('With valid accesstoken, should display all available products', function(done) {
         request(app)
             .get('/products')
-            .set('Content-Type', 'application/json')
             .set('accesstoken', accesstoken)
             .then((response) => {
-                console.log('INI RESPONSE GET PRODUCTS ** ==> ', response)
                 expect(response.status).toBe(200)
-                // expect()
+                expect(response.body).toHaveProperty('products', expect.any(Array))
+                done()
+            })
+    })
+
+    it('Without valid accesstoken, should not display any product', function(done) {
+        request(app)
+            .get('/products')
+            .set('accesstoken', !accesstoken)
+            .then((response) => {
+                expect(response.status).toBe(401)
+                expect(response.body).toHaveProperty('error', expect.any(Object))
+                done()
+            })
+    })
+})
+
+// PRODUCTS --> CREATE NEW PRODUCT
+describe.only('POST /products/', () => {
+    
+    it('With a valid accesstoken AND role is admin, a product can be created', function(done) {
+        request(app)
+            .post('/products')
+            .set('Content-Type', 'application/json')
+            .set('accesstoken', accesstoken)
+            .send({
+                name: 'Durian',
+                image_url: 'http://www.image.com/4',
+                price: 250000,
+                stock: 6,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            })
+            .then((response) => {
+                expect(response.status).toBe(201)
+                expect(response.body).toHaveProperty('product', expect.any(Object))
+                done()
+            })
+    })
+
+    it.only('Without a valid accesstoken and/or role is not admin, a product cannot be created', function(done) {
+        request(app)
+            .post('/products')
+            .set('Content-Type', 'application/json')
+            .set('accesstoken', !accesstoken)
+            .send({
+                name: 'Durian',
+                image_url: 'http://www.image.com/4',
+                price: 250000,
+                stock: 6,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            })
+            .then((response) => {
+                expect(response.status).toBe(401)
+                expect(response.body).toHaveProperty('error', expect.any(Object))
+                done()
             })
     })
 })

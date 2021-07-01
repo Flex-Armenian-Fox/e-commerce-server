@@ -10,18 +10,19 @@ function errorHandler (err, req, res, next) {
     switch (err.name) {
 
         case 'SequelizeValidationError':
-            console.log('MASUK ERROR HANDLER - SequelizeValidationError !!!')
             statusCode = 400
             break
 
         case 'Not Found':
-        case 'Not Authorised':
-            console.log('MASUK ERROR HANDLER - Not Found/Authorised !!!')
             statusCode = 404
+            break
+            
+        case 'Not Authorised':
+        case 'JsonWebTokenError':
+            statusCode = 401
             break
 
         default:
-            console.log('MASUK ERROR HANDLER - DEFAULT !!!')
             statusCode = 500
     }
 

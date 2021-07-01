@@ -54,17 +54,12 @@ afterAll((done) => {  // ini untuk: Bersihin DB
 })
 
 // LIFECYCLE - EACH
-beforeEach(() => {
-    console.log('LIFECYCLE USER ==> beforeEach')
-})
-
-afterEach(() => {
-    console.log('LIFECYCLE USER ==> afterEach')
-})
+beforeEach(() => {})
+afterEach(() => {})
 
 // USERS --> REGISTER
 // describe('POST /users/register', () => {
-//     // POSITIVE
+//     
 //     it('Should register new user and respond in JSON with accesstoken', function(done) {
 //         request(app)
 //             .post('/users/register')
@@ -77,7 +72,6 @@ afterEach(() => {
 //             })
 //     })
 
-//     // NEGATIVE
 //     it('Should not create new user and/or give accesstoken', function(done) {
 //         request(app)
 //             .post('/users/register')
@@ -93,7 +87,7 @@ afterEach(() => {
 
 // USERS --> LOGIN
 describe.only('POST /users/login', () => {
-    // POSITIVE
+    
     it('Should allow login and respond in JSON with accesstoken', function(done) {
         request(app)
             .post('/users/login')
@@ -107,7 +101,6 @@ describe.only('POST /users/login', () => {
             })
     })
 
-    // NEGATIVE
     it('Should not allow login and/or give accesstoken', function(done) {
         request(app)
             .post('/users/login')

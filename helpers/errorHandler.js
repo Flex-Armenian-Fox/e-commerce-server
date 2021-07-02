@@ -26,6 +26,8 @@ function errorHandler (err, req, res, next) {
             statusCode = 500
     }
 
+    console.log(err)
+    console.log({error: err})
     res.status(statusCode).json({error: err})
 
 }

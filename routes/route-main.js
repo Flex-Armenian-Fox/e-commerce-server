@@ -14,6 +14,7 @@ router.post('/users/login', ControllerUser.login)
 // ROUTER - PRODUCTS (CRUD)
 router.use(authentication)
 router.get('/products', ControllerProduct.displayAll)
+router.get('/products/:id', ControllerProduct.displayOne)
 
 // di bawah ini harus ada AUTHORISATION ADMIN
 router.post('/products', authorisationAdmin, ControllerProduct.createNew)

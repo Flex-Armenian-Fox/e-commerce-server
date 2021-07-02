@@ -6,6 +6,7 @@
 | ------ | ----------------------| --------------------------------------------------------- |
 | POST   | /users/login          | Log a `User` in                                           |
 | GET    | /products/            | Display all available `Product`                           |
+| GET    | /products/:id         | Display one `Product` based on its ID                     |
 | POST   | /products/            | Create a new `Product`                                    |
 | PUT    | /products/:id         | Update all fields/columns of a `Product` based on its ID  |
 | DELETE | /products/:id         | Delete a `Product` based on its ID                        |
@@ -83,33 +84,30 @@ Display all `Product` available.
             "products": [
                 {
                     "id": 1,
-                    "title": "Bayar invoice",
-                    "description": "internet, credit card",
-                    "due_date": "2021-07-20 00:00:00.000 +00:00",
-                    "category": "backlog",
-                    "UserId": 1,
+                    "name": "Jeruk",
+                    "image_url": "http://www.image.com/1",
+                    "price": 1000,
+                    "stock": 20,
                     "createdAt": "2021-06-15T10:45:56.955Z",
                     "updatedAt": "2021-06-15T12:46:31.148Z"
                 },
                 {
                     "id": 2,
-                    "title": "Write story",
-                    "description": "",
-                    "due_date": "2001-11-10 17:00:00.000 +00:00",
-                    "category": "todo",
-                    "UserId": 1,
-                    "createdAt": "2021-06-15T10:46:31.050Z",
-                    "updatedAt": "2021-06-15T10:46:31.050Z"
+                    "name": "Nanas",
+                    "image_url": "http://www.image.com/2",
+                    "price": 5000,
+                    "stock": 26,
+                    "createdAt": "2021-06-15T10:45:56.955Z",
+                    "updatedAt": "2021-06-15T12:46:31.148Z"
                 },
                 {
                     "id": 3,
-                    "title": "Clean up sketches",
-                    "description": "",
-                    "due_date": "2021-12-08 00:00:00.000 +00:00",
-                    "category": "backlog",
-                    "UserId": 1,
-                    "createdAt": "2021-06-15T10:50:31.699Z",
-                    "updatedAt": "2021-06-15T10:50:31.699Z"
+                    "name": "Manggis",
+                    "image_url": "http://www.image.com/3",
+                    "price": 500,
+                    "stock": 19,
+                    "createdAt": "2021-06-15T10:45:56.955Z",
+                    "updatedAt": "2021-06-15T12:46:31.148Z"
                 }
             ]
         }
@@ -122,9 +120,12 @@ Display all `Product` available.
 
     ```json
 
-        {
-            "message": "jwt must be provided"
+    {
+        "error": "JsonWebTokenError" {
+            "name": "JsonWebTokenError",
+            "message": "jwt malformed"
         }
+    }
 
     ```
 
@@ -141,10 +142,10 @@ Display all `Product` available.
 <br>
 ============
 
-### **TASKS > DISPLAY ONE TASK**
-Display one `Task` based on its ID  .
+### **PRODUCTS > DISPLAY ONE PRODUCT**
+Display one `Product` based on its ID  .
 
-* **URL**  `/tasks/`
+* **URL**  `/products/`
 * **METHOD**  `GET`
 * **URL PARAMS**  Required: `id=[integer]`
 * **DATA PARAMS** none
@@ -156,18 +157,15 @@ Display one `Task` based on its ID  .
 
     ```json
         {
-            "task": [
-                {
-                    "id": 1,
-                    "title": "Bayar invoice",
-                    "description": "internet, credit card",
-                    "due_date": "2021-07-20 00:00:00.000 +00:00",
-                    "category": "backlog",
-                    "UserId": 1,
-                    "createdAt": "2021-06-15T10:45:56.955Z",
-                    "updatedAt": "2021-06-15T12:46:31.148Z"
-                }
-            ]
+            "product": {
+                "id": 1,
+                "name": "Jeruk",
+                "image_url": "http://www.image.com/1",
+                "price": 1000,
+                "stock": 20,
+                "createdAt": "2021-07-02T07:45:54.583Z",
+                "updatedAt": "2021-07-02T07:45:54.583Z"
+            }
         }
     ```
 
@@ -178,9 +176,21 @@ Display one `Task` based on its ID  .
 
     ```json
 
-        {
-            "message": "jwt must be provided"
+    {
+        "error": "JsonWebTokenError" {
+            "name": "JsonWebTokenError",
+            "message": "jwt malformed"
         }
+    }
+
+    ```
+
+    - Code: `404`<br/>
+    Content:
+
+    ```json
+
+    { "error": { "name": "Not Found" } }
 
     ```
 
@@ -197,21 +207,23 @@ Display one `Task` based on its ID  .
 <br>
 ============
 
-### **TASKS > CREATE NEW TASK**
-Create a new `Task`.
+### **PRODUCTS > CREATE NEW PRODUCT**
+Create a new `Product`.
 
-* **URL**  `/tasks/`
+* **URL**  `/products/`
 * **METHOD**  `POST`
 * **URL PARAMS**  none
 * **DATA PARAMS**
 
 ```json
-  {
-    "title": "<task name> required",
-    "description": "<task description> not required",
-    "due_date": "<task due date> not required",
-    "category": "<task category> required"
-  }
+    {
+        "name": "Durian",
+        "image_url": "http://www.image.com/4",
+        "price": 250000,
+        "stock": 6,
+        "createdAt": "2021-07-02T07:53:00.324Z",
+        "updatedAt": "2021-07-02T07:53:00.324Z"
+    }
 ```
 
 * **SUCCESS RESPONSE**
@@ -222,29 +234,31 @@ Create a new `Task`.
     ```json
         {
             "task": {
-                "id": 8,
-                "title": "Beli kopi",
-                "description": "pakai voucher diskon",
-                "due_date": null,
-                "category": "backlog",
-                "UserId": 2,
-                "updatedAt": "2021-06-16T05:21:04.388Z",
-                "createdAt": "2021-06-16T05:21:04.388Z"
+                "id": 41,
+                "name": "Durian",
+                "image_url": "http://www.image.com/4",
+                "price": 250000,
+                "stock": 6,
+                "createdAt": "2021-07-02T07:53:00.324Z",
+                "updatedAt": "2021-07-02T07:53:00.324Z"
             }
         }
     ```
 
 * **ERROR RESPONSE**
 
-    - Code: `400`<br/>
+    - Code: `401`<br/>
     Content:
 
     ```json
 
         {
-            "message": "Validation error: Title cannot be empty"
+            "error": "JsonWebTokenError" {
+                "name": "JsonWebTokenError",
+                "message": "jwt malformed"
+            }
         }
-        
+
     ```
 
     - Code: `400`<br/>
@@ -253,7 +267,18 @@ Create a new `Task`.
     ```json
 
         {
-            "message": "Validation error: Category must be either \"backlog\", \"todo\", \"doing\", or \"done\""
+            "errors": [
+                "ValidationErrorItem" {
+                "message": "Product name cannot be empty",
+                "type": "Validation error",
+                "path": "name",
+                "value": "",
+                "origin": "FUNCTION",
+                "instance": "[Product]",
+                "validatorKey": "notEmpty",
+                "validatorName": "notEmpty",
+                "validatorArgs": "[Array]",
+                "original": "[Error]"
         }
 
     ```
@@ -271,22 +296,22 @@ Create a new `Task`.
 <br>
 ============
 
-### **TASKS > EDIT ALL COLUMNS OF A TASK**
+### **PRODUCTS > EDIT ALL COLUMNS OF A PRODUCT**
 Update all fields/columns of a `Task` based on its ID.
 
-* **URL**  `/tasks/`
+* **URL**  `/products/`
 * **METHOD**  `PUT`
 * **URL PARAMS** Required: `id=[integer]`
 * **DATA PARAMS**
 
-```json
-  {
-    "title": "<task name> required",
-    "description": "<task description> not required",
-    "due_date": "<task due date> not required",
-    "category": "<task category> required"
-  }
-```
+    ```json
+        {
+            "name": "Rambutan",
+            "image_url": "http://www.image.com/1",
+            "price": 18900,
+            "stock": 24
+        }
+    ```
 
 * **SUCCESS RESPONSE**
 
@@ -295,17 +320,16 @@ Update all fields/columns of a `Task` based on its ID.
 
     ```json
         {
-            "message": "Task with ID 7 has been successfully updated",
-            "updated_task": [
+            "product": "Product with ID 1 has been updated",
+            "updated_product": [
                 {
-                    "id": 7,
-                    "title": "Tidur siang",
-                    "description": "2 jam",
-                    "due_date": "2021-07-20 00:00:00.000 +00:00",
-                    "category": "done",
-                    "UserId": 2,
-                    "createdAt": "2021-06-16T03:34:54.656Z",
-                    "updatedAt": "2021-06-16T05:27:25.808Z"
+                    "id": 1,
+                    "name": "Rambutan",
+                    "image_url": "http://www.image.com/1",
+                    "price": 18900,
+                    "stock": 24,
+                    "createdAt": "2021-07-02T08:02:55.762Z",
+                    "updatedAt": "2021-07-02T08:02:55.826Z"
                 }
             ]
         }
@@ -319,9 +343,12 @@ Update all fields/columns of a `Task` based on its ID.
     ```json
 
         {
-            "message": "User 2 does not have permission"
+            "error": "JsonWebTokenError" {
+                "name": "JsonWebTokenError",
+                "message": "jwt malformed"
+            }
         }
-        
+
     ```
 
     - Code: `404`<br/>
@@ -329,9 +356,7 @@ Update all fields/columns of a `Task` based on its ID.
 
     ```json
 
-        {
-            "message": "Task with ID 20 not found"
-        }
+        { "error": { "name": "Not Found" } }
 
     ```
 
@@ -348,84 +373,10 @@ Update all fields/columns of a `Task` based on its ID.
 <br>
 ============
 
-### **TASKS > EDIT CATEGORY OF A TASK**
-Update the category field of `Task` based on its ID.
+### **PRODUCTS > DELETE A PRODUCT**
+Delete a `Product` based on its ID.
 
-* **URL**  `/tasks/`
-* **METHOD**  `PATCH`
-* **URL PARAMS** Required: `id=[integer]`
-* **DATA PARAMS**
-
-```json
-  {
-    "category": "<task category> required"
-  }
-```
-
-* **SUCCESS RESPONSE**
-
-    - Code: `200`<br/>
-    Content:
-
-    ```json
-        {
-            "message": "Task with ID 5 has been successfully updated",
-            "updated_task": [
-                {
-                    "id": 5,
-                    "title": "Beli hadiah ultah mama",
-                    "description": "tanaman",
-                    "due_date": "2021-08-08 00:00:00.000 +00:00",
-                    "category": "backlog",
-                    "UserId": 2,
-                    "createdAt": "2021-06-15T12:47:59.174Z",
-                    "updatedAt": "2021-06-16T05:38:55.843Z"
-                }
-            ]
-        }
-    ```
-
-* **ERROR RESPONSE**
-
-    - Code: `401`<br/>
-    Content:
-
-    ```json
-
-        {
-            "message": "User 2 does not have permission"
-        }
-        
-    ```
-
-    - Code: `404`<br/>
-    Content:
-
-    ```json
-
-        {
-            "message": "Task with ID 20 not found"
-        }
-
-    ```
-
-    - Code: `500`<br/>
-    Content:
-
-    ```json
-
-        {
-            "message": "Internal server error"
-        }
-
-    ```
-<br>
-============
-
-### **TASKS > DELETE A TASK**
-Delete a `Task` based on its ID.
-
-* **URL**  `/tasks/`
+* **URL**  `/products/`
 * **METHOD**  `DELETE`
 * **URL PARAMS** Required: `id=[integer]`
 * **DATA PARAMS** none
@@ -437,7 +388,7 @@ Delete a `Task` based on its ID.
 
     ```json
         {
-            "message": "Task with ID 8 has been successfully deleted"
+            "success": "Product with ID 1 has been deleted"
         }
     ```
 
@@ -449,9 +400,12 @@ Delete a `Task` based on its ID.
     ```json
 
         {
-            "message": "User 2 does not have permission"
+            "error": "JsonWebTokenError" {
+                "name": "JsonWebTokenError",
+                "message": "jwt malformed"
+            }
         }
-        
+
     ```
 
     - Code: `404`<br/>
@@ -459,9 +413,7 @@ Delete a `Task` based on its ID.
 
     ```json
 
-        {
-            "message": "Task with ID 20 not found"
-        }
+        { "error": { "name": "Not Found" } }
 
     ```
 

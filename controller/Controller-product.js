@@ -16,6 +16,23 @@ class ControllerProduct {
             })
     }
 
+    static displayOne (req, res, next) {
+        console.log('MASUK STATIC displayOne')
+
+        Product.findOne({where: {id: +req.params.id}})
+            .then(product => {
+                if (!product) {
+                    throw {name: 'Not Found'}
+                } else {
+                    console.log('INI PRODUCT %%% > ', product)
+                    res.status(200).json({product: product})
+                }
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
     static createNew (req, res, next) {
         console.log('MASUK STATIC createNew')
 
@@ -28,17 +45,18 @@ class ControllerProduct {
 
         Product.create(input)
             .then(product => {
+                console.log('INI PRODUCT %%% > ', product)
                 res.status(201).json({
                     product: product
                 })
             })
             .catch(err => {
-                console.log('MASUK CATCH - createNew')
                 next(err)
             })
     }
 
     static editOne (req, res, next) {
+        console.log('MASUK STATIC editOne')
         const newInput = {
             name: req.body.name,
             image_url: req.body.image_url,
@@ -53,6 +71,7 @@ class ControllerProduct {
                 if (response[0] === 0) {
                     throw {name: 'Not Found'}
                 } else {
+                    console.log('INI RESPONSE[1] %%% > ', response[1])
                     res.status(200).json({
                         product: `Product with ID ${req.params.id} has been updated`,
                         updated_product: response[1]
@@ -65,16 +84,19 @@ class ControllerProduct {
     }
 
     static deleteOne (req, res, next) {
-
-        Product.findOne({where: {id: +req.params.id}})
-            .then(() => {
-                res.status(200).json({
-                    success: `Product with ID ${req.params.id} has been deleted`
-                })
+        console.log('MASUK STATIC deleteOne')
+        Product.destroy({where: {id: +req.params.id}})
+            .then((response) => {
+                if (response !== 1) {
+                    throw {name: 'Not Found'}
+                } else {
+                    res.status(200).json({
+                        success: `Product with ID ${req.params.id} has been deleted`
+                    })
+                }
             })
-            .catch(() => {
-                const error = {name: 'Not Authorised'}
-                next(error)
+            .catch((err) => {
+                next(err)
             })
     }
 

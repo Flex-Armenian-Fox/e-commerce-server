@@ -28,10 +28,19 @@ class Controller{
             Product.destroy({where:{id: req.params.id}})
                 .then((product) => {
                     if(product == 0) throw({name: "notFound", message: "Product not found"})
+                    console.log("product deleted")
                     res.status(200).json({message: "Item deleted"})
                 })
                 .catch(err => next(err))
         }
+    }
+    static getProduct(req, res, next){
+        Product.findAll()
+            .then((products) => {
+                if(products.length == 0) throw({name: "notFound", message: "Products not found"})
+                res.status(200).json(products)
+            })
+            .catch(err => next(err))
     }
 }
 

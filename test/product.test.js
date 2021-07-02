@@ -238,7 +238,7 @@ describe("Update Product", (done) =>{
             })
     })
     
-    it("Should return error validation error: Product name cannot be empty", (done) => {
+    it("Should return error Product name cannot be empty", (done) => {
         request(app)
             .put('/products/' + targetID)
             .set('content-type', 'application/json')
@@ -251,12 +251,12 @@ describe("Update Product", (done) =>{
             })
             .then((res) => {
                 expect(res.status).toBe(400)
-                expect(res.body).toHaveProperty("message", "Validation error: Product name cannot be empty")
+                expect(res.body).toHaveProperty("message", "Product name cannot be empty")
                 done()
             })
     })
     
-    it("Should return error validation error: Price cannot be negative", (done) => {
+    it("Should return error Price cannot be negative", (done) => {
         request(app)
             .put('/products/' + targetID)
             .set('content-type', 'application/json')
@@ -269,12 +269,12 @@ describe("Update Product", (done) =>{
             })
             .then((res) => {
                 expect(res.status).toBe(400)
-                expect(res.body).toHaveProperty("message", "Validation error: Price cannot be negative")
+                expect(res.body).toHaveProperty("message", "Price cannot be negative")
                 done()
             })
     })
     
-    it("Should return error validation error: Stock cannot be negative", (done) => {
+    it("Should return error Stock cannot be negative", (done) => {
         request(app)
             .put('/products/' + targetID)
             .set('content-type', 'application/json')
@@ -287,7 +287,7 @@ describe("Update Product", (done) =>{
             })
             .then((res) => {
                 expect(res.status).toBe(400)
-                expect(res.body).toHaveProperty("message", "Validation error: Stock cannot be negative")
+                expect(res.body).toHaveProperty("message", "Stock cannot be negative")
                 done()
             })
     })
@@ -309,6 +309,30 @@ describe("Update Product", (done) =>{
                 done()
             })
     })
+})
+
+describe("get product", (done) => {
+    it("Should return error 400 bad request", (done) => {
+        request(app)
+            .get('/products/')
+            .set('content-type', 'application/json')
+            .set('access_token', 'broken token')
+            .then((res) => {
+                expect(res.status).toBe(400)
+                done()
+            })
+        })
+
+    it("Should get the data", (done) =>{
+        request(app)
+            .get('/products/')
+            .set('content-type', 'application/json')
+            .set('access_token', admin_token)
+            .then(res => {
+                expect(res.status).toBe(200)
+                done()
+            })
+        })
 })
 
 describe("Delete product", (done) => {

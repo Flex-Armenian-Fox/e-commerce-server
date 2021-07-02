@@ -24,7 +24,7 @@
   "scripts": {
     "setup:dev": "sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate ",
     "setup:test": "set NODE_ENV=test&& sequelize-cli db:drop&&sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all",
-    "test": "set NODE_ENV=test&&jest --runInBand --forceExit --detectOpenHandles",
+    "test": "set NODE_ENV=test&&jest --runInBand --forceExit --detectOpenHandles --coverage",
     "dev": "set NODE_ENV=development&&nodemon ./bin/server.js",
     "start": "set NODE_ENV=production&&node ./bin/server.js"
   },

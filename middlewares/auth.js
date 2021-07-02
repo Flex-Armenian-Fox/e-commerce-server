@@ -2,7 +2,7 @@ const request = require("superagent")
 const {jwtDecrypt} = require("../helpers/jwt")
 const {User} = require('../models/')
 
-const Authentication = (req, res, next) =>{
+const authentication = (req, res, next) =>{
     try{
         const dataDecoded = jwtDecrypt(req.headers.access_token)
         User.findByPk(dataDecoded.id)
@@ -20,4 +20,9 @@ const Authentication = (req, res, next) =>{
     catch(err) {next(err)}
 }
 
-module.exports = Authentication
+const adminAuth = (req, res, next) =>{
+    if (req.currentUser.role == "admin") {next()}
+    else (next({name: "unauthorized"}))
+}
+
+module.exports = {authentication, adminAuth}

@@ -14,9 +14,12 @@ app.use((err, req, res, next) => {
   let statusCode = 500
   switch (err.name) {
     case "SequelizeValidationError":
+      err.message = err.errors.map(el => el.message)
       statusCode = 400
       break;
 
+    case "SequelizeForeignKeyConstraintError":
+      err.message = "Tag or product is not found"
     case "notFound":
       statusCode = 404
       break;
@@ -27,9 +30,6 @@ app.use((err, req, res, next) => {
       break;
 
     case "badRequest":
-      statusCode = 400
-      break;
-
     case "JsonWebTokenError":
       statusCode = 400
       break;
@@ -37,6 +37,10 @@ app.use((err, req, res, next) => {
     default:
       break;
   }
+  console.log("--------------------------------------ERROR--------------------------------------")
+  console.log(err.name)
+  console.log(err.message)
+  console.log("--------------------------------------ERROR--------------------------------------")
   res.status(statusCode).json({ message: err.message });
 });
 

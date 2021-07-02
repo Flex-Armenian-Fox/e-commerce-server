@@ -66,7 +66,7 @@ describe("POST /login", () =>{
         request(app)
             .post('/login')
             .set('content-type', 'application/json')
-            .send({email: 'admin@mail.com', password:'12345'})
+            .send({email: '', password:''})
             .then((res) =>{
                 expect(res.status).toBe(401)
                 done()

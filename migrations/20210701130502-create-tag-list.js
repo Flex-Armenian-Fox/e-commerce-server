@@ -10,11 +10,21 @@ module.exports = {
       },
       tagId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: "Tags",
+          key: "id"
+        }
       },
       productId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: "Products",
+          key: "id"
+        }
       },
       createdAt: {
         allowNull: false,

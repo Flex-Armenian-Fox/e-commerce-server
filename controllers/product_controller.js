@@ -36,11 +36,11 @@ class Controller {
 
     static async createProduct(req, res, next) {
         try {
-            const { name, image_url, price, stock } = req.body
-            const newUser = await Product.create({
-                name, image_url, price, stock
+            const { name, image_url, price, stock, category_id } = req.body
+            const newProduct = await Product.create({
+                name, image_url, price, stock, category_id
             })
-            const response = new ResponseHelper('success', newUser)
+            const response = new ResponseHelper('success', newProduct)
 
             return res.status(201).json(response)
         } catch (error) {

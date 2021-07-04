@@ -61,10 +61,6 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: {
           args: true,
           msg: 'Price must be a number'
-        },
-        min: {
-          args: 500,
-          msg: 'Price cannot be less than 500'
         }
       }
     },
@@ -83,10 +79,6 @@ module.exports = (sequelize, DataTypes) => {
         isInt: {
           args: true,
           msg: 'Stock must be an integer'
-        },
-        min: {
-          args: 0,
-          msg: 'Stock cannot be less than 0'
         }
       }
     }

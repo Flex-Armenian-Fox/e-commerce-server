@@ -3,12 +3,11 @@
 const router = require('express').Router()
 const ControllerUser = require('../controller/Controller-user.js')
 const ControllerProduct = require('../controller/Controller-product.js')
-const { route } = require('../app.js')
 const authentication = require('../helpers/authentication.js')
 const authorisationAdmin = require('../helpers/authorisation.js')
 
 // ROUTER - USERS
-// router.post('/users/register', ControllerUser.register) // ga butuh
+router.post('/users/register', ControllerUser.register) // admin aja
 router.post('/users/login', ControllerUser.login)
 
 // ROUTER - PRODUCTS (CRUD)

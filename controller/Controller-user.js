@@ -16,6 +16,7 @@ class ControllerUser {
         .then(user => {
             const token = jwt.sign({id: user.id, email: user.email}, 'ubigoreng')
             res.status(201).json({
+                message: `User ${user.email} has been registered!`,
                 accesstoken: token
             })
         })

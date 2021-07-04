@@ -120,12 +120,12 @@ Display all `Product` available.
 
     ```json
 
-    {
-        "error": "JsonWebTokenError" {
-            "name": "JsonWebTokenError",
-            "message": "jwt malformed"
+        {
+            "error": {
+                "name": "JsonWebTokenError",
+                "message": "jwt must be provided"
+            }
         }
-    }
 
     ```
 
@@ -176,12 +176,12 @@ Display one `Product` based on its ID  .
 
     ```json
 
-    {
-        "error": "JsonWebTokenError" {
-            "name": "JsonWebTokenError",
-            "message": "jwt malformed"
+        {
+            "error": {
+                "name": "JsonWebTokenError",
+                "message": "jwt must be provided"
+            }
         }
-    }
 
     ```
 
@@ -233,7 +233,7 @@ Create a new `Product`.
 
     ```json
         {
-            "task": {
+            "product": {
                 "id": 41,
                 "name": "Durian",
                 "image_url": "http://www.image.com/4",
@@ -253,9 +253,9 @@ Create a new `Product`.
     ```json
 
         {
-            "error": "JsonWebTokenError" {
+            "error": {
                 "name": "JsonWebTokenError",
-                "message": "jwt malformed"
+                "message": "jwt must be provided"
             }
         }
 
@@ -343,9 +343,9 @@ Update all fields/columns of a `Task` based on its ID.
     ```json
 
         {
-            "error": "JsonWebTokenError" {
+            "error": {
                 "name": "JsonWebTokenError",
-                "message": "jwt malformed"
+                "message": "jwt must be provided"
             }
         }
 
@@ -400,9 +400,9 @@ Delete a `Product` based on its ID.
     ```json
 
         {
-            "error": "JsonWebTokenError" {
+            "error": {
                 "name": "JsonWebTokenError",
-                "message": "jwt malformed"
+                "message": "jwt must be provided"
             }
         }
 

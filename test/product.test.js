@@ -83,7 +83,7 @@ beforeEach(() => {})
 afterEach(() => {})
 
 // PRODUCTS --> READ
-describe('GET /products/', () => {
+describe.only('GET /products/', () => {
     
     it('With valid accesstoken, should display all available products, and should return 200', function(done) {
         request(app)
@@ -99,7 +99,7 @@ describe('GET /products/', () => {
     it('Without valid accesstoken, should not display any product, and should return 401', function(done) {
         request(app)
             .get('/products')
-            .set('accesstoken', !accesstoken)
+            .set('accesstoken', 'accesstoken')
             .then((response) => {
                 expect(response.status).toBe(401)
                 expect(response.body).toHaveProperty('error', expect.any(Object))

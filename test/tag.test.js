@@ -73,8 +73,12 @@ beforeAll((done) =>{
     .then(tag => {
         targetTag = tag.id
         console.log(targetTag+"THIS IS TARGET TAG")
-        done()
+        let data = [{
+            
+        }]
+        return queryInterface.bulkInsert("TagList", data)
     })
+    .then()
 })
 
 describe("Post Tag", (done) =>{

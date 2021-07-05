@@ -1,4 +1,4 @@
-const {Product} = require('../models')
+const {Product, Tag} = require('../models')
 
 class Controller{
     static postProduct(req, res, next){
@@ -35,7 +35,7 @@ class Controller{
         }
     }
     static getProduct(req, res, next){
-        Product.findAll()
+        Product.findAll({include: [Tag]})
             .then((products) => {
                 if(products.length == 0) throw({name: "notFound", message: "Products not found"})
                 res.status(200).json(products)

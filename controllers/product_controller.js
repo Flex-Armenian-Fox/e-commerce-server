@@ -73,14 +73,14 @@ class Controller {
     static async updateProduct(req, res, next) {
         try {
             const productId = req.params.id
-            const { name, image_url, price, stock } = req.body
+            const { name, image_url, price, stock, category_id } = req.body
             const product = await Product.findByPk(productId)
             let response = {}
 
             if (!product) throw new CustomError('NotFound', `Product with id ${productId} was not found`)
 
             const updatedProduct = await Product.update({
-                name, image_url, price, stock
+                name, image_url, price, stock, category_id
             }, {
                 where: { id: productId },
                 returning: true

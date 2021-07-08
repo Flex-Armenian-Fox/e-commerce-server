@@ -2,7 +2,6 @@
 
 function errorHandler (err, req, res, next) {
 
-    console.log('MASUK ERROR HANDLER !!!!')
     console.log('INI err.name ===> ', err.name)
 
     let statusCode = 0
@@ -26,8 +25,6 @@ function errorHandler (err, req, res, next) {
             statusCode = 500
     }
 
-    console.log(err)
-    console.log({error: err})
     res.status(statusCode).json({error: err})
 
 }

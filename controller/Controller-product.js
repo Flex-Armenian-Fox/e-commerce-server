@@ -5,8 +5,6 @@ const {Product} = require('../models')
 class ControllerProduct {
 
     static displayAll (req, res, next) {
-        console.log('MASUK STATIC DISPLAYALL')
-
         Product.findAll({order: [['id', 'ASC']]})
             .then(products => {
                 res.status(200).json({products})
@@ -17,14 +15,11 @@ class ControllerProduct {
     }
 
     static displayOne (req, res, next) {
-        console.log('MASUK STATIC displayOne')
-
         Product.findOne({where: {id: +req.params.id}})
             .then(product => {
                 if (!product) {
                     throw {name: 'Not Found'}
                 } else {
-                    console.log('INI PRODUCT %%% > ', product)
                     res.status(200).json({product: product})
                 }
             })
@@ -34,8 +29,6 @@ class ControllerProduct {
     }
 
     static createNew (req, res, next) {
-        console.log('MASUK STATIC createNew')
-
         const input = {
             name: req.body.name,
             image_url: req.body.image_url,
@@ -45,7 +38,6 @@ class ControllerProduct {
 
         Product.create(input)
             .then(product => {
-                console.log('INI PRODUCT %%% > ', product)
                 res.status(201).json({
                     product: product
                 })
@@ -56,7 +48,6 @@ class ControllerProduct {
     }
 
     static editOne (req, res, next) {
-        console.log('MASUK STATIC editOne')
         const newInput = {
             name: req.body.name,
             image_url: req.body.image_url,
@@ -71,7 +62,6 @@ class ControllerProduct {
                 if (response[0] === 0) {
                     throw {name: 'Not Found'}
                 } else {
-                    console.log('INI RESPONSE[1] %%% > ', response[1])
                     res.status(200).json({
                         product: `Product with ID ${req.params.id} has been updated`,
                         updated_product: response[1]
@@ -84,7 +74,6 @@ class ControllerProduct {
     }
 
     static deleteOne (req, res, next) {
-        console.log('MASUK STATIC deleteOne')
         Product.destroy({where: {id: +req.params.id}})
             .then((response) => {
                 if (response !== 1) {

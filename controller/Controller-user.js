@@ -7,7 +7,6 @@ const {comparePassword} = require('../helpers/bcrypt.js')
 class ControllerUser {
 
     static register (req, res, next) {
-        console.log('MASUK STATIC REGISTER')
         User.create({
             email: req.body.email,
             password: req.body.password,

@@ -43,7 +43,7 @@ class ControllerUser {
                         }
                     } else {
                         const payload = {id: user.id, email: user.email}
-                        const token = jwt.sign(payload, 'ubigoreng')
+                        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY)
                         res.status(200).json({
                             accesstoken: token
                         })

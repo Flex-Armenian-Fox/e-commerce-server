@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull:false,
+      unique: {args: true},
       validate:{
         notNull: {msg: "Tag name may not be empty"},
         notEmpty: {msg: "Tag name may not be empty"}

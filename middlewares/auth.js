@@ -3,6 +3,7 @@ const {jwtDecrypt} = require("../helpers/jwt")
 const {User} = require('../models/')
 
 const authentication = (req, res, next) =>{
+    console.log(req.headers.access_token, '<-----------------')
     try{
         const dataDecoded = jwtDecrypt(req.headers.access_token)
         User.findByPk(dataDecoded.id)

@@ -35,7 +35,10 @@ class Controller{
         }
     }
     static getProduct(req, res, next){
-        Product.findAll({include: [Tag]})
+        Product.findAll({include: {
+            model: Tag,
+            through: {attributes: ['id']}
+        }})
             .then((products) => {
                 if(products.length == 0) throw({name: "notFound", message: "Products not found"})
                 res.status(200).json(products)

@@ -11,9 +11,11 @@ router.put('/products/:id', authentication, adminAuth, productC.putProduct)
 router.delete('/products/:id', authentication, adminAuth, productC.delProduct)
 router.get('/products', authentication, productC.getProduct)
 
-router.put('/tags/:id', authentication, adminAuth, tagC.putTag)
 router.post('/tags', authentication, adminAuth, tagC.postTag)
+router.put('/tags/:id', authentication, adminAuth, tagC.putTag)
 router.delete('/tags/:id', authentication, adminAuth, tagC.delTag)
+router.get('/tags', authentication, tagC.getTag)
 router.post('/productTag', authentication, adminAuth, tagC.addTag)
+router.delete('/productTag/:id', authentication, adminAuth, tagC.removeTag)
 
 module.exports = router

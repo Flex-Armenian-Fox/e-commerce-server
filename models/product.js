@@ -11,6 +11,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product.belongsTo(models.Category, { foreignKey: 'category_id' })
+      Product.belongsToMany(models.User, {
+        through: models.Transaction, 
+        foreignKey: 'product_id' 
+      })
+      Product.hasMany(models.Transaction, {
+        as: 'product_transaction',
+        foreignKey: 'product_id'
+      })
+      Product.hasMany(models.Cart, { foreignKey: 'product_id' })
+      Product.belongsToMany(models.User, {
+        through: models.Cart,
+        foreignKey: 'product_id'
+      })
     }
   };
   Product.init({
@@ -46,13 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     category_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Please provide category_id'
-        }
-      }
+      allowNull: true      
     }
   }, {
     sequelize,

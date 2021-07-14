@@ -6,7 +6,7 @@
   "scripts": {
     "setup:test": "set NODE_ENV=test&&sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate",
     "setup:dev": "sequelize-cli db:drop&&sequelize-cli db:create&&sequelize-cli db:migrate&&sequelize-cli db:seed:all",
-    "test": "set NODE_ENV=test&&jest --runInBand --forceExit --detectOpenHandles --coverage",
+    "test": "set NODE_ENV=test&&jest --runInBand --forceExit --detectOpenHandles",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },

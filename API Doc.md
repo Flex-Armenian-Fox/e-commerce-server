@@ -4,6 +4,7 @@
 | HTTP METHOD | URL                 | DESKRIPSI          |
 | ----------- | ------------------- | ------------------ |
 | **POST**    | /api/users/login | Login User |
+| **POST** | /api/users/register | Register New User |
 | **GET** | /api/products | Mendapatkan list seluruh product |
 | **GET** | /api/products/`:id` | Mendapatkan product berdasarkan param `id` |
 | **POST** | /api/products | Membuat product baru |
@@ -14,6 +15,11 @@
 | **POST** | /api/categories | Membuat category baru |
 | **PUT** | /api/categories/`:id` | Mengupdate category berdasarkan param `id` |
 | **DELETE** | /api/categories/`:id` | Menghapus category berdasarkan param `id` |
+| **POST** | /api/carts | Menambahkan item ke cart |
+| **GET** | /api/carts | Mendapatkan list seluruh item di cart |
+| **PATCH** | /api/carts/`:id` | Mengupdate total quantity di cart |
+| **DELETE** | /api/carts/`:id` | Menghapus item di cart berdasarkan param `id` |
+| **DELETE** | /api/carts | Menghapus seluruh item di cart berdasarkan user yang login |
 
 ---
 ## Login User
@@ -70,6 +76,55 @@
     }
 }
 ```
+---
+## Register New User
+- HTTP Method : `POST`
+- URL : `/api/users/register`
+- Request Body : `json`
+- Request Params : *none*
+- Request Headers : *none*
+- Response : `json`
+
+#### Request Body Example
+```json
+{
+    "email": "anton@mail.com",
+    "password": "1234"
+}
+```
+#### Response Success Status : `201`
+```json
+{
+    "message": "success",
+    "data": {
+        "id": 1,
+        "email": "anton@mail.com",
+        "createdAt": "2021-06-20T17:21:11.000Z",
+        "updatedAt": "2021-06-20T17:21:11.000Z"
+    }
+}
+```
+#### Response Error Status : `400`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "BadRequest",
+        "message": "Please provide username or password"
+    }
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "UncaughtException",
+        "message": "mail is not defined"
+    }
+}
+```
+
 ---
 ## Mendapatkan list seluruh product
 - HTTP Method : `GET`
@@ -658,6 +713,262 @@
     "error": {
         "name": "NotFound",
         "message": "Category with id <id> was not found"
+    }
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "UncaughtException",
+        "message": "mail is not defined"
+    }
+}
+```
+---
+## Menambahkan item ke cart
+- HTTP Method : `POST`
+- URL : `/api/carts`
+- Request Body : `json`
+- Request Params : *none*
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Request Body Example
+```json
+{
+    "product_id": 13,
+    "total_quantity": 4
+}
+```
+#### Response Success Status : `201`
+```json
+{
+    "message": "success",
+    "data": {
+        "product_id": 13,
+        "user_id": 2,
+        "total_quantity": 4
+    }
+}
+```
+#### Response Error Status : `401`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "Unauthorized",
+        "message": "You are not authorized"
+    }
+}
+```
+#### Response Error Status : `400`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "BadRequest",
+        "message": "Total quantity cannot more than product stock"
+    }
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "UncaughtException",
+        "message": "mail is not defined"
+    }
+}
+```
+---
+## Mendapatkan list seluruh item di cart
+- HTTP Method : `GET`
+- URL : `/api/carts`
+- Request Body : *none*
+- Request Params : *none*
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Response Success Status : `200`
+```json
+[
+    {
+        "id": 4,
+        "user_id": 2,
+        "product_id": 13,
+        "total_quantity": 1,
+        "createdAt": "2021-07-14T17:17:32.084Z",
+        "updatedAt": "2021-07-14T17:17:32.084Z",
+        "User": {
+            "id": 2,
+            "email": "anton@mail.com",
+            "role": "customer"
+        },
+        "Product": {
+            "id": 13,
+            "name": "Ducati Evo 1198",
+            "image_url": "https://i.pinimg.com/originals/49/99/5e/49995e51efd8fa0a73cb9fd03cacd874.jpg",
+            "price": 279000000,
+            "stock": 3
+        }
+    }
+]
+```
+#### Response Error Status : `401`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "Unauthorized",
+        "message": "You are not authorized"
+    }
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "UncaughtException",
+        "message": "mail is not defined"
+    }
+}
+```
+---
+## Mengupdate total quantity di cart
+- HTTP Method : `PATCH`
+- URL : `/api/carts/:id`
+- Request Body : `json`
+- Request Params : `id`
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Request Body Example:
+```json
+{
+    "total_quantity": 2
+}
+```
+
+#### Response Success Status : `200`
+```json
+{
+    "message": "success",
+    "data": [
+        {
+            "user_id": 2,
+            "product_id": 27,
+            "total_quantity": 2,
+            "createdAt": "2021-07-14T17:32:57.912Z",
+            "updatedAt": "2021-07-14T17:42:43.295Z"
+        }
+    ]
+}
+```
+#### Response Error Status : `401`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "Unauthorized",
+        "message": "You are not authorized"
+    }
+}
+```
+#### Response Error Status : `400`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "BadRequest",
+        "message": "Total quantity cannot more than product stock"
+    }
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "UncaughtException",
+        "message": "mail is not defined"
+    }
+}
+```
+---
+## Menghapus item di cart berdasarkan param `id`
+- HTTP Method : `DELETE`
+- URL : `/api/carts/:id`
+- Request Body : *none*
+- Request Params : `id`
+- Request Headers : `access_token`
+- Response : `json`
+
+
+#### Response Success Status : `200`
+```json
+{
+    "message": "success delete cart with id: 7",
+    "data": null
+}
+```
+#### Response Error Status : `401`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "Unauthorized",
+        "message": "You are not authorized"
+    }
+}
+```
+#### Response Error Status : `404`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "NotFound",
+        "message": "Cart with id <id> not found"
+    }
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "UncaughtException",
+        "message": "mail is not defined"
+    }
+}
+```
+---
+## Menghapus seluruh item di cart berdasarkan user yang login
+- HTTP Method : `DELETE`
+- URL : `/api/carts`
+- Request Body : *none*
+- Request Params : *none*
+- Request Headers : `access_token`
+- Response : `json`
+
+
+#### Response Success Status : `200`
+```json
+{
+    "message": "success delete all carts!",
+    "data": null
+}
+```
+#### Response Error Status : `401`
+```json
+{
+    "message": "error",
+    "error": {
+        "name": "Unauthorized",
+        "message": "You are not authorized"
     }
 }
 ```

@@ -17,7 +17,7 @@ function authentication(req, res, next) {
                         message: 'Email/password incorrect'
                     }
                 } else { // JWT valid DAN User KETEMU
-                    req.currentUser = {role: user.role}
+                    req.currentUser = {id: user.id, role: user.role, email: user.email}
                     next()
                 }
             })

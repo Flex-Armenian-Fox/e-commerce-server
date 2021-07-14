@@ -21,6 +21,10 @@ function errorHandler (err, req, res, next) {
             statusCode = 401
             break
 
+        case 'Conflicted':
+            statusCode = 409
+            break
+
         default:
             statusCode = 500
     }

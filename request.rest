@@ -1,0 +1,122 @@
+### POST /register
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "email": "user2@mail.com",
+  "password": "password2"
+}
+
+
+### POST /login 1
+POST https://dast-ecommerce.herokuapp.com/login
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "password": "1234"
+}
+
+### POST /login 2
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "email": "user1@mail.com",
+  "password": "password1"
+}
+
+
+### POST /products
+POST http://localhost:3000/products
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjI1MTUzNzc3fQ.RcsLzpv_mVaDleF4xgwyBEotq9jFRTAFLeDnOeXKTv8
+
+{
+  "name": "Jacket 2",
+  "image_url": "https://images.unsplash.com/photo-1624930199388-580d52e8106e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+  "price": 850000,
+  "stock": 13,
+  "category": "Outer"
+}
+
+
+### GET /products
+GET http://localhost:3000/products
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjI1MTUzNzc3fQ.RcsLzpv_mVaDleF4xgwyBEotq9jFRTAFLeDnOeXKTv8
+
+
+### GET /products/:id
+GET http://localhost:3000/products/3
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjI1MTUzNzc3fQ.RcsLzpv_mVaDleF4xgwyBEotq9jFRTAFLeDnOeXKTv8
+
+
+### PUT /products/:id
+PUT http://localhost:3000/products/1
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNjI1MjMwMjYwfQ.2gKsvfh-vxXkJqt4Ztn9OfTAKlW9bU8WL-OyZkAqGpY
+
+{
+  "name": "Jacket 3",
+  "image_url": "https://images.unsplash.com/photo-1624930199388-580d52e8106e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+  "price": 850000,
+  "stock": 12,
+  "category": "outer"
+}
+
+
+### PATCH /products/:id
+PATCH http://localhost:3000/products/4
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjIzNDcxNjk1fQ.QIvKNH4Dwex7Zl3CHqYEom7aeooHlVb724597C07zhs
+
+{
+  "category": "backlog"
+}
+
+
+### DELETE /products/:id
+DELETE http://localhost:3000/products/4
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluIiwiaWF0IjoxNjI1MjMwMzY2fQ.l8zNXGTWzvQY54EMYLjO1q5e3P_waSOzf7HeIyGjo5k
+
+
+# CART rest
+
+### Add cart POST /carts/:id
+POST http://localhost:3000/carts/50
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjI1ODQ4Mzc0fQ.g2kW9X__C11GqaBGhMKBGr_OeWeBmHEFIItl0OdfjMM
+
+{
+  "amount": 4
+}
+
+### GET /carts user1
+GET http://localhost:3000/carts
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjI1ODQ4Mzc0fQ.g2kW9X__C11GqaBGhMKBGr_OeWeBmHEFIItl0OdfjMM
+
+
+### GET /carts user2
+GET http://localhost:3000/carts
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjI1ODQ3NzE5fQ.6ODpkxYda_TXVrosXHII5REyU2z5Yz6SHg77KnhW5NA
+
+
+### DELETE /carts/:id
+DELETE http://localhost:3000/carts/6
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjI1ODQ4Mzc0fQ.g2kW9X__C11GqaBGhMKBGr_OeWeBmHEFIItl0OdfjMM
+
+
+### PUT /carts/:id
+PUT http://localhost:3000/carts/7
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjI1ODQ4Mzc0fQ.g2kW9X__C11GqaBGhMKBGr_OeWeBmHEFIItl0OdfjMM
+
+{
+  "amount": 4
+}

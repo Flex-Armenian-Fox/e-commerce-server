@@ -4,11 +4,18 @@ const { comparePassword } = require('../helpers/bcrypt')
 
 class UsersController{
     static register(req, res, next) {
-        user.create({
+        let dataUser = {
             email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
-        })
+            password: req.body.password
+        }
+
+        if (!req.body.role) {
+            dataUser.role = "cust"
+        } else {
+            dataUser.role = req.body.role
+        }
+
+        user.create(dataUser)
         .then(result => {
             const token = generateToken({
                 id: result.id,
@@ -16,6 +23,7 @@ class UsersController{
             });
 
             res.status(201).json({
+                role: result.role,
                 access_token: token
             })
         })
@@ -52,6 +60,7 @@ class UsersController{
             });
 
             res.status(200).json({
+                role: result.role,
                 access_token: token,
             })
         })

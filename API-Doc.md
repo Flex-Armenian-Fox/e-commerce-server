@@ -23,6 +23,14 @@
 | **PUT** | /api/products/:id | Update Product By `id` |
 | **DELETE** | /api/products/:id | Delete Product By `id` |
 <br>
+## carts
+| HTTP METHOD | URL                 | DESKRIPSI          |
+| ----------- | ------------------- | ------------------ |
+| **POST**    | /api/carts          | Insert New Product |
+| **GET** | /api/carts | Get All Cart List
+| **PUT** | /api/carts/:id | Update Cart By `id` |
+| **DELETE** | /api/carts/:id | Delete Cart By `id` |
+<br>
 ----
 ## Register New User
 - HTTP Method : `POST`
@@ -40,11 +48,18 @@
     "role": "admin"
 }
 ```
-
+OR
+```json
+{
+    "email": "cust@mail.com",
+    "password": "123456"
+}
+```
 #### Response Success Status : `201`
 
 ```json
 {
+    "role": "[admin || cust]"
     "access_token": "[access_token]"
 }
 ```
@@ -73,6 +88,7 @@
 #### Response Success Status : `200`
 ```json
 {
+    "role": "[admin || cust]",
     "access_token": "[access_token]"
 }
 ```
@@ -254,7 +270,7 @@
 - URL : `/products`
 - Request Body : *none*
 - Request Params : *none*
-- Request Headers : `access_token`
+- Request Headers : *none*
 - Response : `json`
 
 #### Response Success Status : `200`
@@ -334,6 +350,140 @@
 ```json
 {
     "message": "product with id <id> not found"
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "[Error Message]"
+}
+```
+---
+
+
+## Insert New Cart
+- HTTP Method : `POST`
+- URL : `/carts`
+- Request Body : `json`
+- Request Params : *none*
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Request Body Example
+```json
+{
+    "productid": "id product",
+    "qty": 1,
+    "price": 10000,
+    "userid": 10
+}
+```
+#### Response Success Status : `201`
+```json
+{
+    "id": 1,
+    "productid": "id products",
+    "qty": 1,
+    "price": 10000,
+    "userid": 10,
+    "updatedAt": "2021-06-30T11:09:31.251Z",
+    "createdAt": "2021-06-30T11:09:31.251Z"
+}
+```
+#### Response Error Status : `400` OR `500`
+```json
+{
+    "message": "[Error Message]"
+}
+```
+---
+## Get All Cart List
+- HTTP Method : `GET`
+- URL : `/carts`
+- Request Body : *none*
+- Request Params : *none*
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Response Success Status : `200`
+```json
+[
+    {
+        "id": 1,
+        "productid": 1,
+        "qty": 1,
+        "price": 10000,
+        "orderid": null,
+        "updatedAt": "2021-06-30T11:09:31.251Z",
+        "createdAt": "2021-06-30T11:09:31.251Z",
+        "product": {
+            "id": 1,
+            "name": "Product Name",
+            "image_url": "Image URL",
+            "price": 10000,
+            "stock": 10,
+            "categoryid": 1,
+            "updatedAt": "2021-06-30T11:09:31.251Z",
+            "createdAt": "2021-06-30T11:09:31.251Z",
+        }
+    }
+]
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "[Error Message]",
+}
+```
+---
+## Update Cart By id
+- HTTP Method : `PUT`
+- URL : `/carts/:id`
+- Request Body : `json`
+- Request Params : `id`
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Response Success Status : `200`
+```json
+{
+    "productid": "id product",
+    "qty": 1,
+    "price": 10000,
+    "userid": 10
+}
+```
+#### Response Error Status : `404`
+```json
+{
+    "message": "Cart with id <id> not found"
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "[Error Message]"
+}
+```
+---
+## Delete Cart By id
+- HTTP Method : `DELETE`
+- URL : `/carts/:id`
+- Request Body : *none*
+- Request Params : `id`
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Response Success Status : `200`
+```json
+{
+    "message": "cart success to delete"
+}
+```
+#### Response Error Status : `404`
+```json
+{
+    "message": "cart with id <id> not found"
 }
 ```
 #### Response Error Status : `500`

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      user.hasMany(models.cart, {foreignKey: "userid"})
     }
   };
   user.init({
@@ -41,7 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       notNull: {
         msg: "Role Can`t be Null"
       }
-    }
+    },
+    address: DataTypes.STRING,
+    phone: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'user',

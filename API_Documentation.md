@@ -36,7 +36,7 @@ Register a `User`.
 
 * **SUCCESS RESPONSE**
 
-    - Code: `200`<br/>
+    - Code: `201`<br/>
     Content:
 
     ```json

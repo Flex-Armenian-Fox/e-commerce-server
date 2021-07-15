@@ -11,23 +11,22 @@ class ControllerCart {
 
         Product.findOne({where: {id: +req.params.productId}})
             .then(product => {
-                console.log(product.name, ' <= addToCart THEN: product')
-                if (!product) { // no hay producto
+                if (!product) {
                     throw {
                         name: 'Not Found',
                         message: 'Product not found'
                     }
-                } else { // hay producto
+                } else {
                     currentStock = product.stock
                     productName = product.name
-                    if (product.stock >= +req.body.quantity) { // cantidad suficiente
+                    if (product.stock >= +req.body.quantity) {
                         return Cart.findOne({
                             where: {
                                 UserId: +req.currentUser.id,
                                 ProductId: +req.params.productId
                             }
                         })
-                    } else { // cantidad no suficiente
+                    } else {
                         throw {
                             name: 'Conflicted',
                             message: 'Not enough stock'
@@ -36,7 +35,6 @@ class ControllerCart {
                 }
             })
             .then(cart => {
-                console.log(cart, ' <= addToCart THEN: cart')
                 if (!cart) { // ga ktmu, bikin di sini, masukkan qty dari req.body.quantity
                     qtyToDeduct += req.body.quantity
                     return Cart.create({
@@ -56,38 +54,87 @@ class ControllerCart {
                 }
             })
             .then(currentCart => {
-                console.log(currentCart, ' <= addToCart THEN: currentCart')
-                return Product.update(
-                    {stock: currentStock - qtyToDeduct},
-                    {where: {id: +req.params.productId}}
-                )
-            })
-            .then(finalProduct => {
-                console.log(finalProduct, ' <= addToCart THEN: finalProduct')
-                res.status(200).json({
+                res.status(201).json({
                     message: `${+qtyToDeduct} ${productName} added to cart`
                 })
+                // return Product.update(
+                //     {stock: currentStock - qtyToDeduct},
+                //     {where: {id: +req.params.productId}}
+                // )
             })
+            // .then(finalProduct => {
+            //     console.log(finalProduct, ' <= addToCart THEN: finalProduct')
+            // })
             .catch(err => {
-                console.log(err, ' <= addToCart CATCH: err')
                 next(err)
             })
     }
 
-    static displayAll (req, res, next) {
-        
+    static displayCart (req, res, next) {
+        Cart.findAll({
+            where: {UserId: +req.currentUser.id},
+            include: [{model: Product}, {model: User}]
+        })
+            .then(carts => {
+                res.status(200).json({
+                    cart: carts
+                })
+            })
+            .catch(err => {
+                next(err)
+            })
     }
 
-    static editPatch (req, res, next) {
-
-    }
-
-    static editPut (req, res, next) {
+    static patchQuantity (req, res, next) {
+        Cart.findOne({
+            where: {id: +req.params.cartId},
+            include: [{model: Product}, {model: User}]
+        })
+            .then(cart => {
+                // console.log(cart.Product.stock, ' <= patchQuantity THEN: cart findOne')
+                if (cart.Product.stock >= +req.body.newQuantity) {
+                    return Cart.update(
+                        {quantity: +req.body.newQuantity},
+                        {returning: true, where: {id: +req.params.cartId} }
+                    )
+                } else {
+                    throw {
+                        name: 'Conflicted',
+                        message: 'Not enough stock'
+                    }
+                }
+            })
+            .then(updatedCart => {
+                // console.log(updatedCart[1], ' <= patchQuantity THEN: updatedCart')
+                if (updatedCart[0] !== 1) {
+                    throw {
+                        name: 'Conflicted',
+                        message: 'Nothing updated'
+                    }
+                } else {
+                    res.status(200).json({
+                        message: `Quantity updated to ${req.body.newQuantity}`
+                    })
+                }
+            })
+            .catch(err => {
+                // console.log(err, ' <= patchQuantity CATCH: err')
+                next(err)
+            })
 
     }
 
     static removeCart (req, res, next) {
-
+        Cart.destroy({where: {id: +req.params.cartId}})
+            .then(response => {
+                // console.log(response, ' <= removeCart THEN: response')
+                res.status(200).json({
+                    message: 'Successfully deleted'
+                })
+            })
+            .catch(err => {
+                next(err)
+            })
     }
 
 }

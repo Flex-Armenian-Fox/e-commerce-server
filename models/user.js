@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsToMany(models.Product, { through: 'Cart' })
+      User.belongsToMany(models.Product, { through: 'Carts' })
     }
   };
   User.init({
@@ -53,12 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
-        notNull: {
-          args: true,
-          msg: 'Role cannot be null'
-        },
         notEmpty: {
           args: true,
           msg: 'Role cannot be empty'
@@ -72,6 +67,9 @@ module.exports = (sequelize, DataTypes) => {
           user.password = hashedPw
 
           if (user.role !== 'admin') user.role = 'customer'
+        },
+        beforeValidate: (user, options) => {
+          if (user.role === '') user.role = 'customer'
         }
     },
     sequelize,

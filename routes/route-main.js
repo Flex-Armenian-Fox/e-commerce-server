@@ -8,23 +8,23 @@ const ControllerCart = require('../controller/Controller-cart.js')
 
 const authentication = require('../helpers/authentication.js')
 const authorisationAdmin = require('../helpers/authorisationAdmin.js')
-const authorisationCustomer = require('../helpers/authorisationCustomer.js')
+const {authCustomerGeneral, authCustomerActions} = require('../helpers/authorisationCustomer.js')
 
 // ROUTER - USERS
-router.post('/users/register', ControllerUser.register) // admin aja
+router.post('/users/register', ControllerUser.register)
 router.post('/users/login', ControllerUser.login)
-
-// ROUTER - PRODUCTS (CRUD)
-router.use(authentication)
 router.get('/products', ControllerProduct.displayAll)
 router.get('/products/:id', ControllerProduct.displayOne)
 
-// ROUTER - CART ('UsersProducts') untuk CUSTOMERS
-router.post('/cart/:productId', authorisationCustomer, ControllerCart.addToCart)
-// router.get('/cart', authorisationCustomer, ControllerCart.displayAll)
-// router.patch('/cart/:id', authorisationCustomer, ControllerCart.editPatch)
-// router.put('/cart/:id', authorisationCustomer, ControllerCart.editPut)
-// router.delete('/cart/:id', authorisationCustomer, ControllerCart.removeCart)
+// ROUTER - PRODUCTS (CRUD)
+router.use(authentication)
+
+// ROUTER - CART untuk Customers
+router.post('/cart/:productId', authCustomerGeneral, ControllerCart.addToCart)
+router.get('/cart', authCustomerGeneral, ControllerCart.displayCart)
+//
+router.patch('/cart/:cartId', authCustomerGeneral, authCustomerActions, ControllerCart.patchQuantity)
+router.delete('/cart/:cartId', authCustomerGeneral, authCustomerActions, ControllerCart.removeCart)
 
 // di bawah ini harus ada AUTHORISATION ADMIN
 router.post('/products', authorisationAdmin, ControllerProduct.createNew)

@@ -7,17 +7,27 @@ const {comparePassword} = require('../helpers/bcrypt.js')
 class ControllerUser {
 
     static register (req, res, next) {
-        User.create({
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
+        User.findOrCreate({
+            where: {email: req.body.email},
+            defaults: {
+                email: req.body.email,
+                password: req.body.password,
+                role: req.body.role
+            }
         })
         .then(user => {
-            const token = jwt.sign({id: user.id, email: user.email}, 'ubigoreng')
-            res.status(201).json({
-                message: `User ${user.email} has been registered!`,
-                accesstoken: token
-            })
+            if (!user[1]) {
+                throw {
+                    name: 'Conflicted',
+                    message: `User with email ${req.body.email} already exists`
+                }
+            } else {
+                const token = jwt.sign({id: user.id, email: user.email}, 'ubigoreng')
+                res.status(201).json({
+                    message: `User ${user[0].email} has been registered!`,
+                    accesstoken: token
+                })
+            }
         })
         .catch(err => {
             next(err)

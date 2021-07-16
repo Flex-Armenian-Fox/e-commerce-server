@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
         status: 'up'
     })
 })
-app.use(route)
+app.get('/', route)
 app.use(errorHandler)
 
 module.exports = app

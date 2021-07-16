@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
       break;
   }
   console.log("--------------------------------------ERROR--------------------------------------")
-  console.log(err.name)
+  console.log(err)
   console.log(err.message)
   console.log("--------------------------------------ERROR--------------------------------------")
   res.status(statusCode).json({ message: err.message });

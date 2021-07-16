@@ -1,4 +1,5 @@
-const {Product, Tag} = require('../models')
+const {Product, Tag, Cart, User} = require('../models')
+const {jwtDecrypt} = require("../helpers/jwt")
 
 class Controller{
     static postProduct(req, res, next){
@@ -35,10 +36,19 @@ class Controller{
         }
     }
     static getProduct(req, res, next){
-        Product.findAll({include: {
+        let targetId = null
+        if(req.headers.access_token) {targetId = jwtDecrypt(req.headers.access_token).id} 
+        Product.findAll({include: [
+            {
             model: Tag,
             through: {attributes: ['id']}
-        }})
+            },
+            {
+                model: Cart,
+                where: {UserId: targetId? targetId : 0},
+                required: false
+            }
+        ]})
             .then((products) => {
                 if(products.length == 0) throw({name: "notFound", message: "Products not found"})
                 res.status(200).json(products)

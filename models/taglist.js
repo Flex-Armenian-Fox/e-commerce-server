@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Tag, {foreignKey: 'tagId', onDelete: 'CASCADE'})
-      this.belongsTo(models.Product, {foreignKey: 'tagId', onDelete: 'CASCADE'})
+      this.belongsTo(models.Product, {foreignKey: 'productId', onDelete: 'CASCADE'})
     }
   };
   TagList.init({

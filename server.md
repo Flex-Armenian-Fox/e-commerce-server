@@ -54,6 +54,224 @@ Used to collect a Token for a registered User.
     {"message":"Wrong password"}
 ```
 
+# Register
+
+Used to register a user.
+
+**URL** : `/register/`
+
+**Method** : `POST`
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+{
+    "email": "[valid email address]",
+    "password": "[password in plain text]"
+}
+```
+
+## Success Response
+
+**Code** : `201`
+
+**Content example**
+
+```json
+{
+    "message": "registration success"
+}
+```
+
+## Error Response
+
+**Condition** : If 'email' is already registered.
+
+**Code** : `400`
+```json
+{
+    "message": "email is already taken"
+}
+```
+**Condition** : If 'email' or 'password' is empty.
+
+**Code** : `400`
+
+**Json** :
+```json
+    {"message":"No username or password"}
+```
+
+**Condition** : If 'email' is not in email format.
+
+**Code** : `400`
+
+**Json** :
+```json
+    {"message":"Please use proper email format"}
+```
+
+# Google login
+
+Used to collect a Token for a registered User.
+
+**URL** : `/glogin/`
+
+**Method** : `POST`
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+{
+     "access_token": "93144b288eb1fdccbe46d6fc0f241a51766ecd3d"
+}
+```
+
+## Success Response
+
+**Code** : `200`
+
+**Content example**
+
+```json
+{
+    "message": "registration success"
+}
+```
+
+## Error Response
+
+
+# GET Product
+
+Used to GET all existing product.
+
+**URL** : `/products/:id`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+
+```
+
+## Success Response
+
+**Code** : `200`
+
+**Content example**
+
+```json
+[
+    {
+        "id": 2,
+        "name": "pin",
+        "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801875392757810/image0.jpg",
+        "price": 101,
+        "stock": 88,
+        "createdAt": "2021-07-05T15:08:09.452Z",
+        "updatedAt": "2021-07-16T03:13:49.028Z",
+        "Tags": [
+            {
+                "id": 1,
+                "name": "teg",
+                "createdAt": "2021-07-06T01:54:48.664Z",
+                "updatedAt": "2021-07-06T01:54:48.664Z",
+                "TagList": {
+                    "id": 3
+                }
+            },
+            {
+                "id": 13,
+                "name": "gambar",
+                "createdAt": "2021-07-15T13:49:04.598Z",
+                "updatedAt": "2021-07-15T13:49:04.598Z",
+                "TagList": {
+                    "id": 7
+                }
+            }
+        ],
+        "Carts": [
+            {
+                "UserId": 5,
+                "ProductId": 2,
+                "toBuy": 7,
+                "createdAt": "2021-07-16T03:14:17.190Z",
+                "updatedAt": "2021-07-16T03:24:16.616Z"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "sigil",
+        "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801538586607636/image0.png",
+        "price": 2,
+        "stock": 0,
+        "createdAt": "2021-07-06T14:33:49.998Z",
+        "updatedAt": "2021-07-16T03:13:19.593Z",
+        "Tags": [
+            {
+                "id": 3,
+                "name": "tog",
+                "createdAt": "2021-07-06T01:55:00.102Z",
+                "updatedAt": "2021-07-06T01:55:00.102Z",
+                "TagList": {
+                    "id": 5
+                }
+            }
+        ],
+        "Carts": []
+    },
+    {
+        "id": 1,
+        "name": "icon",
+        "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801611738415164/image0.jpg",
+        "price": 100,
+        "stock": 100,
+        "createdAt": "2021-07-05T15:08:01.962Z",
+        "updatedAt": "2021-07-07T11:34:38.980Z",
+        "Tags": [
+            {
+                "id": 13,
+                "name": "gambar",
+                "createdAt": "2021-07-15T13:49:04.598Z",
+                "updatedAt": "2021-07-15T13:49:04.598Z",
+                "TagList": {
+                    "id": 6
+                }
+            }
+        ],
+        "Carts": [
+            {
+                "UserId": 5,
+                "ProductId": 1,
+                "toBuy": 4,
+                "createdAt": "2021-07-16T03:24:26.315Z",
+                "updatedAt": "2021-07-16T03:24:26.315Z"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "barang baru",
+        "image_url": "",
+        "price": 30,
+        "stock": 20,
+        "createdAt": "2021-07-08T08:32:22.606Z",
+        "updatedAt": "2021-07-08T08:32:22.606Z",
+        "Tags": [],
+        "Carts": []
+    }
+]
+```
+
 # Post Product
 
 Used to register a new product.
@@ -199,82 +417,6 @@ Used to delete an existing product.
     {"message":"Product not found"}
 ```
 
-# GET Product
-
-Used to GET all existing product.
-
-**URL** : `/products/:id`
-
-**Method** : `GET`
-
-**Auth required** : YES (not admin credential)
-
-**Data constraints**
-
-```json
-
-```
-
-## Success Response
-
-**Code** : `200`
-
-**Content example**
-
-```json
-[
-    {
-        "id": 2,
-        "name": "pin",
-        "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801875392757810/image0.jpg",
-        "price": 101,
-        "stock": 108,
-        "createdAt": "2021-07-05T15:08:09.452Z",
-        "updatedAt": "2021-07-06T14:34:21.331Z",
-        "Tags": [
-            {
-                "id": 1,
-                "name": "teg",
-                "createdAt": "2021-07-06T01:54:48.664Z",
-                "updatedAt": "2021-07-06T01:54:48.664Z",
-                "TagList": {
-                    "id": 3
-                }
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "name": "sigil",
-        "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801538586607636/image0.png",
-        "price": 2,
-        "stock": 3,
-        "createdAt": "2021-07-06T14:33:49.998Z",
-        "updatedAt": "2021-07-07T14:49:22.042Z",
-        "Tags": [
-            {
-                "id": 12,
-                "name": "tag baru",
-                "createdAt": "2021-07-07T14:42:31.056Z",
-                "updatedAt": "2021-07-07T14:42:31.056Z",
-                "TagList": {
-                    "id": 4
-                }
-            }
-        ]
-    },
-    {
-        "id": 1,
-        "name": "icon",
-        "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801611738415164/image0.jpg",
-        "price": 100,
-        "stock": 100,
-        "createdAt": "2021-07-05T15:08:01.962Z",
-        "updatedAt": "2021-07-07T11:34:38.980Z",
-        "Tags": []
-    }
-]
-```
 
 ## Error Response
 
@@ -344,11 +486,11 @@ Used to register a new tag.
 ```json
 ```
 
-# PUT Product
+# PUT Tag
 
-Used to edit an existing product.
+Used to edit an existing tag.
 
-**URL** : `/products/:id`
+**URL** : `/tags/:id`
 
 **Method** : `PUT`
 
@@ -454,7 +596,7 @@ Used to GET all existing tags.
 
 **Method** : `GET`
 
-**Auth required** : YES (not admin credential)
+**Auth required** : NO
 
 **Data constraints**
 
@@ -592,4 +734,208 @@ Used to delete an existing tag relation.
 
 **Json** :
 ```json
+```
+
+# addCart
+
+Used to add items to cart or create a new cart.
+
+**URL** : `/cart/:id`
+
+**Method** : `POST`
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+    "toBuy": [interger],
+}
+```
+
+## Success Response
+
+**Code** : `201` OR `200`
+
+**Content example**
+
+```json
+    {"message": "added to cart"}
+```
+
+## Error Response
+
+**Condition** : If credential is wrong
+
+**Code** : `401`
+```json
+```
+**Condition** : If product does not exist
+
+**Code** : `404`
+
+**Json** :
+```json
+    {"message":"Product not found"}
+```
+**Condition** : If item requested is more than available stock
+
+**Code** : `400`
+
+**Json** :
+```json
+    {"message": "Item out of stock"}
+```
+
+# POST buy
+
+Used to buy an item in cart.
+
+**URL** : `/buy/:id`
+
+**Method** : `POST`
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+    "toBuy": [integer],
+}
+```
+
+## Success Response
+
+**Code** : `200`
+
+**Content example**
+
+```json
+    {"message": "Purchase complete"}
+```
+
+## Error Response
+
+**Condition** : If credential is wrong
+
+**Code** : `401`
+```json
+```
+**Condition** : If product does not exist
+
+**Code** : `404`
+
+**Json** :
+```json
+    {"message":"Product not found"}
+```
+**Condition** : If item requested is more than available stock
+
+**Code** : `400`
+
+**Json** :
+```json
+    {"message": "Item out of stock"}
+```
+
+# GET cart
+
+Used to GET all the logged in user's cart
+
+**URL** : `/cart/`
+
+**Method** : `GET`
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+    "toBuy": [integer],
+}
+```
+
+## Success Response
+
+**Code** : `200`
+
+**Content example**
+
+```json
+[
+    {
+        "id": 37,
+        "toBuy": 4,
+        "Product": {
+            "id": 1,
+            "name": "icon",
+            "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801611738415164/image0.jpg",
+            "price": 100,
+            "stock": 100,
+            "createdAt": "2021-07-05T15:08:01.962Z",
+            "updatedAt": "2021-07-07T11:34:38.980Z"
+        }
+    },
+    {
+        "id": 35,
+        "toBuy": 7,
+        "Product": {
+            "id": 2,
+            "name": "pin",
+            "image_url": "https://cdn.discordapp.com/attachments/583880464784424960/851801875392757810/image0.jpg",
+            "price": 101,
+            "stock": 88,
+            "createdAt": "2021-07-05T15:08:09.452Z",
+            "updatedAt": "2021-07-16T03:13:49.028Z"
+        }
+    }
+]
+```
+
+## Error Response
+
+**Condition** : If credential is wrong
+
+**Code** : `401`
+```json
+```
+
+# DELETE cart
+
+Used to GET all the logged in user's cart
+
+**URL** : `/cart/:id`
+
+**Method** : `DELETE`
+
+**Auth required** : YES
+
+**Data constraints**
+
+
+## Success Response
+
+**Code** : `200`
+
+**Content example**
+
+```json
+ "delete success"
+```
+
+## Error Response
+
+**Condition** : If credential is wrong
+
+**Code** : `401`
+```json
+```
+**Condition** : If param refer to a non-existent cart
+
+**Code** : `404`
+```json
+    {"message": "Cart not found"}
 ```

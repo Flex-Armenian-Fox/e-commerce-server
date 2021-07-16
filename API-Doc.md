@@ -29,6 +29,7 @@
 | **POST**    | /api/carts          | Insert New Product |
 | **GET** | /api/carts | Get All Cart List
 | **PUT** | /api/carts/:id | Update Cart By `id` |
+| **PATCH** | /api/carts/:id | Update Qty Cart By `id` |
 | **DELETE** | /api/carts/:id | Delete Cart By `id` |
 <br>
 ----
@@ -444,9 +445,57 @@ OR
 - Request Headers : `access_token`
 - Response : `json`
 
+#### Request Body Example
+```json
+{
+    "id": 1,
+    "productid": "id product",
+    "qty": 1,
+    "price": 10000,
+    "userid": 10
+}
+
 #### Response Success Status : `200`
 ```json
 {
+    "id": 1,
+    "productid": "id product",
+    "qty": 1,
+    "price": 10000,
+    "userid": 10
+}
+```
+#### Response Error Status : `404`
+```json
+{
+    "message": "Cart with id <id> not found"
+}
+```
+#### Response Error Status : `500`
+```json
+{
+    "message": "[Error Message]"
+}
+```
+---
+## Update Qty Cart By id
+- HTTP Method : `PATCH`
+- URL : `/carts/:id`
+- Request Body : `json`
+- Request Params : `id`
+- Request Headers : `access_token`
+- Response : `json`
+
+#### Request Body Example
+```json
+{
+    "qty": 1
+}
+
+#### Response Success Status : `200`
+```json
+{
+    "id": 1,
     "productid": "id product",
     "qty": 1,
     "price": 10000,

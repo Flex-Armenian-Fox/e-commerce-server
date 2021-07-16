@@ -11,6 +11,7 @@ class CartController{
             include: [product]
         })
         .then(result => {
+            console.log("CARTS : " , result)
             res.status(200).json(result)
         })
         .catch(err => {
@@ -19,6 +20,7 @@ class CartController{
     }
 
     static addData(req, res, next){
+        req.body.userid = req.currentUser.id
         cart.create(req.body)
         .then(result => {
             res.status(201).json(result)
@@ -26,6 +28,27 @@ class CartController{
         .catch(err => {
             next(err)
         })   
+    }
+
+    static updateQty(req, res, next) {
+        console.log('xxxx')
+        console.log(req.body.qty, "_------------------------------")
+        cart.update({qty: req.body.qty}, {
+            where: {
+                id: req.params.id
+            },
+            returning: true
+        })
+        .then(result => {
+            if (result[0] === 0){
+                res.status(404).json("Data Not Found")
+            } else {
+                res.status(200).json(result[1][0])
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
     }
 
     static updateData(req, res, next){

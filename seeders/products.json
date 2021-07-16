@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "name": "Sneakers E8012",
+        "image_url": "https://i.ibb.co/H77R35H/image1.jpg",
+        "price": 799000,
+        "stock": 10,
+        "categoryid": 1,
+        "brand": "Nike",
+        "item_code": "120001"
+    },
+    {
+        "id": 2,
+        "name": "Sneakers E8013",
+        "image_url": "https://i.ibb.co/H77R35H/image1.jpg",
+        "price": 799000,
+        "stock": 12,
+        "categoryid": 1,
+        "brand": "Nike",
+        "item_code": "120002"
+    },
+    {
+        "id": 3,
+        "name": "Sneakers E8022",
+        "image_url": "https://i.ibb.co/H77R35H/image1.jpg",
+        "price": 999000,
+        "stock": 8,
+        "categoryid": 1,
+        "brand": "Nike",
+        "item_code": "120003"
+    },
+    {
+        "id": 4,
+        "name": "Sneakers X1212",
+        "image_url": "https://i.ibb.co/c6s3nXk/image2.jpg",
+        "price": 799000,
+        "stock": 10,
+        "categoryid": 1,
+        "brand": "Adidas",
+        "item_code": "140001"
+    },
+    {
+        "id": 5,
+        "name": "Sneakers E8013",
+        "image_url": "https://i.ibb.co/c6s3nXk/image2.jpg",
+        "price": 1199000,
+        "stock": 12,
+        "categoryid": 1,
+        "brand": "Sketcher",
+        "item_code": "160001"
+    },
+    {
+        "id": 6,
+        "name": "Sneakers E8022",
+        "image_url": "https://i.ibb.co/5YRGghd/image3.jpg",
+        "price": 999000,
+        "stock": 8,
+        "categoryid": 1,
+        "brand": "Sketcher",
+        "item_code": "160003"
+    },
+    {
+        "id": 7,
+        "name": "Sneakers E8012",
+        "image_url": "https://i.ibb.co/c6s3nXk/image2.jpg",
+        "price": 799000,
+        "stock": 10,
+        "categoryid": 1,
+        "brand": "Nike",
+        "item_code": "120001"
+    },
+    {
+        "id": 8,
+        "name": "Sneakers E8013",
+        "image_url": "https://i.ibb.co/H77R35H/image1.jpg",
+        "price": 799000,
+        "stock": 12,
+        "categoryid": 1,
+        "brand": "Nike",
+        "item_code": "120002"
+    },
+    {
+        "id": 9,
+        "name": "Sneakers E8022",
+        "image_url": "https://i.ibb.co/H77R35H/image1.jpg",
+        "price": 999000,
+        "stock": 8,
+        "categoryid": 2,
+        "brand": "Nike",
+        "item_code": "120003"
+    },
+    {
+        "id": 10,
+        "name": "Sneakers X1212",
+        "image_url": "https://i.ibb.co/c6s3nXk/image2.jpg",
+        "price": 799000,
+        "stock": 10,
+        "categoryid": 2,
+        "brand": "Adidas",
+        "item_code": "140001"
+    },
+    {
+        "id": 11,
+        "name": "Sneakers E8013",
+        "image_url": "https://i.ibb.co/c6s3nXk/image2.jpg",
+        "price": 1199000,
+        "stock": 12,
+        "categoryid": 2,
+        "brand": "Sketcher",
+        "item_code": "160001"
+    },
+    {
+        "id": 13,
+        "name": "Sneakers E8022",
+        "image_url": "https://i.ibb.co/5YRGghd/image3.jpg",
+        "price": 999000,
+        "stock": 8,
+        "categoryid": 3,
+        "brand": "Sketcher",
+        "item_code": "160003"
+    }
+]

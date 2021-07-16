@@ -1,6 +1,7 @@
 const { verifyToken } = require('../helpers/jwt');
 const {user} = require('../models')
 const {product} = require('../models')
+const {cart} = require('../models')
 
 function authentication(req, res, next){
     try{
@@ -47,6 +48,33 @@ const authorizationRole = (req, res, next) => {
     }
 }
 
+const authorizationCart = (req, res, next) => {
+    const {id} = req.params;
+    
+    cart.findOne({
+        where: {id: id}
+    })
+    .then(result => {
+        if (!result){
+            throw {
+                name: "AuthorizationError",
+                message: `Cart List with id ${id} not found`
+            }
+        }
+        if (result.userid == req.currentUser.id){
+            return next();
+        } else {
+            throw{
+                name: "AuthorizationError",
+                message: `user with id ${req.currentUser.id} does not have permission`
+            }
+        }
+    })
+    .catch(err => {
+        next(err)
+    })
+}
+
 module.exports= {
-    authentication, authorizationRole
+    authentication, authorizationRole, authorizationCart
 }

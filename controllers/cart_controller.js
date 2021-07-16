@@ -1,4 +1,4 @@
-const { Cart, User, Product } = require('../models')
+const { Cart, User, Product, Category } = require('../models')
 const ResponseHelper = require('../helpers/response_helper')
 const CustomError = require('../middlewares/error_handler')
 let response = null
@@ -17,7 +17,11 @@ class CartController {
           },
           {
             model: Product,
-            attributes: ['id', 'name', 'image_url', 'price', 'stock']
+            attributes: ['id', 'name', 'image_url', 'price', 'stock'],
+            include: {
+              model: Category,
+              attributes: ['category_name', 'category_description']
+            }
           }
         ]
       })

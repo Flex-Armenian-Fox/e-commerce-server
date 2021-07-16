@@ -10,6 +10,12 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
+app.get('/', (req, res) => {
+    res.status(200).json({
+        name: 'ecommerce_db',
+        status: 'up'
+    })
+})
 app.use(route)
 app.use(errorHandler)
 
